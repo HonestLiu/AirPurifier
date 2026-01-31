@@ -1067,6 +1067,15 @@ zephyr_udc0: &usb_otg {
     aliases {
         oled-display = &ssd1306_node;
     };
+
+    wifi_ap: wifi_ap {
+  compatible = "espressif,esp32-wifi";
+  status = "okay";
+ };
+
+ chosen {
+  zephyr,storage-partition = &storage_partition;
+ };
 };
 
 

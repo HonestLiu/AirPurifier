@@ -84,6 +84,21 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/entropy/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/ethernet/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/flash/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/gpio/cmake_install.cmake")
 endif()
 
@@ -105,5 +120,10 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/timer/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/wifi/cmake_install.cmake")
 endif()
 

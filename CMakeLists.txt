@@ -11,8 +11,11 @@ set(U8G2_CSRC ${U8G2_ROOT}/csrc)
 set(ZEPHYR_U8G2 ${CMAKE_CURRENT_SOURCE_DIR}/modules/display/u8g2_zephyr_port)
 set(GUI ${CMAKE_CURRENT_SOURCE_DIR}/modules/display/gui)
 
+# 自动配网相关
+set(ZEPHYR_WIFI_PROV ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/wifi_prov)
+
 # 头文件搜索路径
-target_include_directories(app PRIVATE ${U8G2_CSRC} ${GUI} ${ZEPHYR_U8G2})
+target_include_directories(app PRIVATE ${U8G2_CSRC} ${GUI} ${ZEPHYR_U8G2} ${ZEPHYR_WIFI_PROV})
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
 target_compile_definitions(app PRIVATE
@@ -61,4 +64,8 @@ target_sources(app PRIVATE
     ${ZEPHYR_U8G2}/u8g2_zephyr_port.c
     ${GUI}/gui_app.c
     ${GUI}/gui.c
+
+    # --- WiFi 配网相关 ---
+    ${ZEPHYR_WIFI_PROV}/wifi_prov_app.c
+    ${ZEPHYR_WIFI_PROV}/wifi_provisioning.c
 )

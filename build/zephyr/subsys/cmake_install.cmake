@@ -152,3 +152,13 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/subsys/usb/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/subsys/crc/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/subsys/net/cmake_install.cmake")
+endif()
+

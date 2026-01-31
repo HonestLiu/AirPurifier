@@ -45,8 +45,10 @@ linker.cmd: \
  /home/hl/zephyrproject/zephyr/include/zephyr/linker/llext-sections.ld \
  /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/include/generated/snippets-rwdata.ld \
  /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/include/generated/snippets-data-sections.ld \
- /home/hl/zephyrproject/zephyr/include/zephyr/linker/common-ram.ld \
+ /home/hl/zephyrproject/zephyr/include/../subsys/net/conn_mgr/conn_mgr.ld \
  /home/hl/zephyrproject/zephyr/include/zephyr/linker/iterable_sections.h \
+ /home/hl/zephyrproject/zephyr/include/../subsys/net/l2/wifi/wifi_nm.ld \
+ /home/hl/zephyrproject/zephyr/include/zephyr/linker/common-ram.ld \
  /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/include/generated/snippets-ram-sections.ld \
  /home/hl/zephyrproject/zephyr/include/zephyr/linker/cplusplus-ram.ld \
  /home/hl/zephyrproject/zephyr/include/zephyr/linker/kobject-data.ld \

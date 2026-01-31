@@ -9,6 +9,8 @@ zephyr/linker_zephyr_pre0.cmd: \
   zephyr/include/generated/zephyr/autoconf.h \
   zephyr/include/generated/zephyr/devicetree_generated.h \
   zephyr/include/generated/zephyr/offsets.h \
+  /home/hl/zephyrproject/zephyr/subsys/net/conn_mgr/conn_mgr.ld \
+  /home/hl/zephyrproject/zephyr/subsys/net/l2/wifi/wifi_nm.ld \
   /home/hl/zephyrproject/zephyr/include/zephyr/devicetree.h \
   /home/hl/zephyrproject/zephyr/include/zephyr/devicetree/can.h \
   /home/hl/zephyrproject/zephyr/include/zephyr/devicetree/clocks.h \
