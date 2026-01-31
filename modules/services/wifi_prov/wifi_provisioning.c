@@ -36,8 +36,9 @@ static char sta_ssid[33];
 static char sta_psk[65];
 static bool sta_has_creds;
 
-K_THREAD_STACK_DEFINE(http_stack, 4096);
-K_THREAD_STACK_DEFINE(dns_stack, 2048);
+/* 改为指针，用于动态分配栈 */
+static k_thread_stack_t *http_stack = NULL;
+static k_thread_stack_t *dns_stack = NULL;
 static struct k_thread http_thread;
 static struct k_thread dns_thread;
 
@@ -69,6 +70,19 @@ static void portal_stop_work_handler(struct k_work *work)
 {
 	ARG_UNUSED(work);
 	stop_captive_portal();
+	
+	/* 等待线程结束并释放栈内存 */
+	if (http_stack) {
+		k_thread_join(&http_thread, K_FOREVER);
+		k_free(http_stack);
+		http_stack = NULL;
+	}
+	if (dns_stack) {
+		k_thread_join(&dns_thread, K_FOREVER);
+		k_free(dns_stack);
+		dns_stack = NULL;
+	}
+
 	disable_ap_mode();
 }
 
@@ -559,11 +573,30 @@ int wifi_prov_start(void)
 	atomic_set(&portal_running, 1);
 	// 启用 AP 模式（开启热点）
 	enable_ap_mode();
-	// 启动 DNS 和 HTTP 服务器线程
-	k_thread_create(&dns_thread, dns_stack, K_THREAD_STACK_SIZEOF(dns_stack),
-			dns_server_thread, NULL, NULL, NULL, 5, 0, K_NO_WAIT);
-	k_thread_create(&http_thread, http_stack, K_THREAD_STACK_SIZEOF(http_stack),
-			http_server_thread, NULL, NULL, NULL, 5, 0, K_NO_WAIT);
+
+	/* 动态分配栈空间 */
+	/* K_THREAD_STACK_ALIGN not publicly exposed, use ARCH_STACK_PTR_ALIGN or safe default */
+	#ifndef K_THREAD_STACK_ALIGN
+	#define K_THREAD_STACK_ALIGN ARCH_STACK_PTR_ALIGN
+	#endif
+
+	if (!dns_stack) {
+		dns_stack = k_aligned_alloc(K_THREAD_STACK_ALIGN, K_THREAD_STACK_LEN(2048));
+	}
+	if (!http_stack) {
+		http_stack = k_aligned_alloc(K_THREAD_STACK_ALIGN, K_THREAD_STACK_LEN(4096));
+	}
+
+	if (dns_stack && http_stack) {
+		// 启动 DNS 和 HTTP 服务器线程
+		k_thread_create(&dns_thread, dns_stack, K_THREAD_STACK_LEN(2048),
+				dns_server_thread, NULL, NULL, NULL, 5, 0, K_NO_WAIT);
+		k_thread_create(&http_thread, http_stack, K_THREAD_STACK_LEN(4096),
+				http_server_thread, NULL, NULL, NULL, 5, 0, K_NO_WAIT);
+	} else {
+		LOG_ERR("无法为配网线程分配栈空间");
+	}
+
 	// 尝试连接到已保存的 Wi-Fi 网络
 	return connect_to_wifi();
 }
