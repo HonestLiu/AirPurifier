@@ -3060,9 +3060,11 @@
     "CONFIG_HWINFO",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "select",
+    [
+      "XSI_SINGLE_PROCESS && POSIX_SYSTEM_INTERFACES"
+    ]
   ],
   [
     "CONFIG_BUILD_OUTPUT_INFO_HEADER",
@@ -4726,9 +4728,59 @@
     "CONFIG_THREAD_RUNTIME_STATS",
     "y",
     "bool",
+    "y",
+    "select",
+    [
+      "POSIX_MULTI_PROCESS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_THREAD_RUNTIME_STATS_USE_TIMING_FUNCTIONS",
+    "y",
+    "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_SCHED_THREAD_USAGE",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_MULTI_PROCESS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_SCHED_THREAD_USAGE_ANALYSIS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_SCHED_THREAD_USAGE_ALL",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/kernel/Kconfig",
+      558
+    ]
+  ],
+  [
+    "CONFIG_SCHED_THREAD_USAGE_AUTO_ENABLE",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/kernel/Kconfig",
+      565
+    ]
   ],
   [
     "CONFIG_THREAD_RUNTIME_STACK_SAFETY",
@@ -6123,6 +6175,89 @@
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_HWINFO_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_HWINFO_HAS_DRIVER",
+    "n",
+    "bool",
+    "y",
+    "select",
+    [
+      "HWINFO_ESP32 && SOC_FAMILY_ESPRESSIF_ESP32 && HWINFO"
+    ]
+  ],
+  [
+    "CONFIG_HWINFO_ESP32",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/drivers/hwinfo/Kconfig.esp32",
+      6
+    ]
   ],
   [
     "CONFIG_HWSPINLOCK",
@@ -7611,9 +7746,11 @@
     "CONFIG_REQUIRES_FULL_LIBC",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "select",
+    [
+      "POSIX_DEVICE_IO && POSIX_SYSTEM_INTERFACES"
+    ]
   ],
   [
     "CONFIG_REQUIRES_FLOAT_PRINTF",
@@ -7676,12 +7813,15 @@
     ]
   ],
   [
-    "CONFIG_MINIMAL_LIBC",
-    "y",
+    "CONFIG_NATIVE_LIBC_INCOMPATIBLE",
+    "n",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "select",
+    [
+      "POSIX_SYSTEM_INTERFACES",
+      "POSIX_SYSTEM_INTERFACES"
+    ]
   ],
   [
     "CONFIG_PICOLIBC",
@@ -7779,12 +7919,26 @@
     ]
   ],
   [
+    "CONFIG_COMMON_LIBC_THRD",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/libc/common/Kconfig",
+      113
+    ]
+  ],
+  [
     "CONFIG_COMMON_LIBC_REMOVE",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/libc/common/Kconfig",
+      120
+    ]
   ],
   [
     "CONFIG_PICOLIBC_USE_MODULE",
@@ -7809,20 +7963,9 @@
     "CONFIG_PICOLIBC_IO_FLOAT",
     "y",
     "bool",
-    null,
-    "unset",
-    null
-  ],
-  [
-    "CONFIG_PICOLIBC_IO_LONG_LONG",
-    "y",
-    "bool",
     "y",
     "default",
-    [
-      "/home/hl/zephyrproject/zephyr/lib/libc/picolibc/Kconfig",
-      34
-    ]
+    null
   ],
   [
     "CONFIG_STDOUT_CONSOLE",
@@ -7856,6 +7999,55 @@
   ],
   [
     "CONFIG_SYS_HASH_FUNC32",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_SHARED_MEMORY_OBJECTS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_SYS_HASH_FUNC32_DJB2",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_SHARED_MEMORY_OBJECTS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_SYS_HASH_FUNC32_MURMUR3",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "SYS_HASH_FUNC32_CHOICE_MURMUR3 && <choice SYS_HASH_FUNC32_CHOICE>"
+    ]
+  ],
+  [
+    "CONFIG_SYS_HASH_FUNC32_CHOICE_DJB2",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_SYS_HASH_FUNC32_CHOICE_MURMUR3",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/hash/Kconfig.hash_func",
+      22
+    ]
+  ],
+  [
+    "CONFIG_SYS_HASH_FUNC32_CHOICE_IDENTITY",
     "y",
     "bool",
     null,
@@ -8195,9 +8387,12 @@
     "CONFIG_CBPRINTF_FP_SUPPORT",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      67
+    ]
   ],
   [
     "CONFIG_CBPRINTF_FP_A_SUPPORT",
@@ -8303,6 +8498,10 @@
     "y",
     "select",
     [
+      "POSIX_DEVICE_IO && POSIX_SYSTEM_INTERFACES",
+      "POSIX_FILE_SYSTEM && POSIX_SYSTEM_INTERFACES",
+      "POSIX_SHARED_MEMORY_OBJECTS && POSIX_SYSTEM_INTERFACES",
+      "EVENTFD",
       "NET_SOCKETS && NETWORKING",
       "NET_SOCKETS_SERVICE && NET_SOCKETS && NETWORKING"
     ]
@@ -8315,16 +8514,20 @@
     "select",
     [
       "ZVFS_EVENTFD && ZVFS",
-      "ZVFS_POLL && ZVFS"
+      "ZVFS_POLL && ZVFS",
+      "POSIX_FILE_SYSTEM && POSIX_SYSTEM_INTERFACES",
+      "POSIX_SHARED_MEMORY_OBJECTS && POSIX_SYSTEM_INTERFACES"
     ]
   ],
   [
     "CONFIG_ZVFS_DEFAULT_FILE_VMETHODS",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "select",
+    [
+      "POSIX_DEVICE_IO && POSIX_SYSTEM_INTERFACES"
+    ]
   ],
   [
     "CONFIG_ZVFS_EVENTFD",
@@ -8333,6 +8536,7 @@
     "y",
     "select",
     [
+      "EVENTFD",
       "NET_SOCKETS_SERVICE && NET_SOCKETS && NETWORKING"
     ]
   ],
@@ -8365,6 +8569,7 @@
     "y",
     "select",
     [
+      "POSIX_DEVICE_IO && POSIX_SYSTEM_INTERFACES",
       "NET_SOCKETS && NETWORKING"
     ]
   ],
@@ -8386,6 +8591,7 @@
     "y",
     "select",
     [
+      "POSIX_DEVICE_IO && POSIX_SYSTEM_INTERFACES",
       "NET_SOCKETS && NETWORKING"
     ]
   ],
@@ -8463,17 +8669,22 @@
     "CONFIG_POSIX_SYSTEM_INTERFACES",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "select",
+    [
+      "POSIX_API"
+    ]
   ],
   [
     "CONFIG_POSIX_API",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      73
+    ]
   ],
   [
     "CONFIG_POSIX_AEP_CHOICE_NONE",
@@ -8527,6 +8738,26 @@
     null
   ],
   [
+    "CONFIG_POSIX_BASE_DEFINITIONS",
+    "n",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_API"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_AEP_REALTIME_MINIMAL",
+    "n",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_API"
+    ]
+  ],
+  [
     "CONFIG_TC_PROVIDES_POSIX_C_LANG_SUPPORT_R",
     "n",
     "bool",
@@ -8543,7 +8774,8 @@
     "y",
     "select",
     [
-      "POSIX_AEP_CHOICE_ZEPHYR && <choice POSIX_AEP_CHOICE>"
+      "POSIX_AEP_CHOICE_ZEPHYR && <choice POSIX_AEP_CHOICE>",
+      "POSIX_THREAD_SAFE_FUNCTIONS && POSIX_THREADS && POSIX_SYSTEM_INTERFACES"
     ]
   ],
   [
@@ -8557,12 +8789,1402 @@
     ]
   ],
   [
-    "CONFIG_EVENTFD",
+    "CONFIG_POSIX_ASYNCHRONOUS_IO",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_BARRIERS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_MAX_PTHREAD_BARRIER_COUNT",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.barrier",
+      19
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_CREATE_BARRIER",
     "y",
     "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_BARRIER_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_POSIX_DEVICE_IO",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_ZVFS_OPEN_ADD_SIZE_POSIX",
+    "y",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.device_io",
+      52
+    ]
+  ],
+  [
+    "CONFIG_POSIX_OPEN_MAX",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.device_io",
+      56
+    ]
+  ],
+  [
+    "CONFIG_POSIX_FD_MGMT",
+    "y",
+    "bool",
+    "y",
+    "imply",
+    [
+      "POSIX_API"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_FILE_SYSTEM_R",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_THREAD_SAFE_FUNCTIONS && POSIX_THREADS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_FILE_SYSTEM",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.fs",
+      7
+    ]
+  ],
+  [
+    "CONFIG_POSIX_PAGE_SIZE",
+    "n",
+    "hex",
+    "0x40",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.mem",
+      11
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SHARED_MEMORY_OBJECTS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MAPPED_FILES",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES",
+      "POSIX_SHARED_MEMORY_OBJECTS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MEMLOCK",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MEMLOCK_RANGE",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MEMORY_PROTECTION",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MESSAGE_PASSING",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_NETWORKING",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_API && NETWORKING"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_HOST_NAME_MAX",
+    "n",
+    "int",
+    "63",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.net",
+      24
+    ]
+  ],
+  [
+    "CONFIG_POSIX_IPV6",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_RAW_SOCKETS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_SINGLE_PROCESS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SYSCONF_IMPL_MACRO",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.proc1",
+      21
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SYSCONF_IMPL_FULL",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_UNAME_VERSION_LEN",
+    "y",
+    "int",
+    "70",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.proc1",
+      41
+    ]
+  ],
+  [
+    "CONFIG_POSIX_UNAME_NODENAME_LEN",
+    "y",
+    "int",
+    "6",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.proc1",
+      47
+    ]
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_POSIX_ENV_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MULTI_PROCESS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_SIGNALS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MULTI_PROCESS_ALIAS_GETPID",
+    "n",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.procN",
+      25
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREADS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_HEAP_MEM_POOL_ADD_SIZE_POSIX_THREADS",
+    "n",
+    "int",
+    "256",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      34
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_THREADS_MAX",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      38
+    ]
+  ],
+  [
+    "CONFIG_MAX_PTHREAD_MUTEX_COUNT",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      47
+    ]
+  ],
+  [
+    "CONFIG_MAX_PTHREAD_COND_COUNT",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      53
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_KEYS_MAX",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      59
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_RECYCLER_DELAY_MS",
+    "y",
+    "int",
+    "100",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      68
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_ATTR_STACKADDR",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_ATTR_STACKSIZE",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREADS_EXT",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_THREAD_PRIORITY_SCHEDULING",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_PTHREAD_ATTR_STACKSIZE_BITS",
+    "y",
+    "int",
+    "23",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      130
+    ]
+  ],
+  [
+    "CONFIG_POSIX_PTHREAD_ATTR_GUARDSIZE_BITS",
+    "y",
+    "int",
+    "9",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      139
+    ]
+  ],
+  [
+    "CONFIG_POSIX_PTHREAD_ATTR_GUARDSIZE_DEFAULT",
+    "y",
+    "int",
+    "0",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.pthread",
+      149
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_PRIO_INHERIT",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_PRIO_PROTECT",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_SAFE_FUNCTIONS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_MUTEX_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_COND_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_KEY_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_POSIX_RW_LOCKS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_MAX_PTHREAD_RWLOCK_COUNT",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.rwlock",
+      17
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_RWLOCK_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_POSIX_READER_WRITER_LOCKS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_PRIORITY_SCHEDULING",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_SEMAPHORES",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SEM_VALUE_MAX",
+    "y",
+    "int",
+    "32767",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.semaphore",
+      14
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SEM_NSEMS_MAX",
+    "y",
+    "int",
+    "256",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.semaphore",
+      21
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SEM_NAMELEN_MAX",
+    "y",
+    "int",
+    "16",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.semaphore",
+      30
+    ]
+  ],
+  [
+    "CONFIG_HEAP_MEM_POOL_ADD_SIZE_POSIX_SEMAPHORES",
+    "n",
+    "int",
+    "256",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.semaphore",
+      37
+    ]
+  ],
+  [
+    "CONFIG_POSIX_REALTIME_SIGNALS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_RTSIG_MAX",
+    "y",
+    "int",
+    "8",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.signal",
+      16
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SIGNALS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SIGNAL_STRING_DESC",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.signal",
+      33
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SPIN_LOCKS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_MAX_PTHREAD_SPINLOCK_COUNT",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.spinlock",
+      17
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PTHREAD_SPINLOCK_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_POSIX_FSYNC",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES",
+      "POSIX_SYNCHRONIZED_IO && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_SYNCHRONIZED_IO",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_TIMERS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_THREAD_CPUTIME",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_MONOTONIC_CLOCK",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_CPUTIME",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_POSIX_CLOCK_SELECTION",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_POSIX_DELAYTIMER_MAX",
+    "y",
+    "int",
+    "32",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.timer",
+      58
+    ]
+  ],
+  [
+    "CONFIG_POSIX_TIMER_MAX",
+    "y",
+    "int",
+    "32",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.timer",
+      68
+    ]
+  ],
+  [
+    "CONFIG_POSIX_TIMEOUTS",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_BASE_DEFINITIONS && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_TIMER_CREATE_WAIT",
+    "y",
+    "int",
+    "100",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/lib/posix/options/Kconfig.timer",
+      86
+    ]
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_TIMER_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_XSI_REALTIME",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS",
+    "y",
+    "bool",
+    "y",
+    "imply",
+    [
+      "POSIX_API"
+    ]
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_XSI_SINGLE_PROCESS_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_XOPEN_STREAMS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_SYSTEM_LOGGING",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_XSI_THREADS_EXT",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_AEP_REALTIME_MINIMAL && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_EVENTFD",
+    "y",
+    "bool",
+    "y",
+    "imply",
+    [
+      "POSIX_API"
+    ]
   ],
   [
     "CONFIG_SMF",
@@ -8585,6 +10207,17 @@
   ],
   [
     "CONFIG_JSON_LIBRARY",
+    "y",
+    "bool",
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      64
+    ]
+  ],
+  [
+    "CONFIG_JSON_LIBRARY_FP_SUPPORT",
     "y",
     "bool",
     null,
@@ -8725,7 +10358,8 @@
     "y",
     "select",
     [
-      "NVS && FLASH && FLASH_PAGE_LAYOUT"
+      "NVS && FLASH && FLASH_PAGE_LAYOUT",
+      "DNS_RESOLVER && NET_NATIVE && NETWORKING"
     ]
   ],
   [
@@ -9020,17 +10654,404 @@
     "CONFIG_FILE_SYSTEM_LIB_LINK",
     "y",
     "bool",
-    null,
-    "unset",
-    null
+    "y",
+    "select",
+    [
+      "FILE_SYSTEM"
+    ]
   ],
   [
     "CONFIG_FILE_SYSTEM",
     "y",
     "bool",
+    "y",
+    "select",
+    [
+      "POSIX_FILE_SYSTEM_R && POSIX_SYSTEM_INTERFACES",
+      "POSIX_FILE_SYSTEM && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_MAX_TYPES",
+    "y",
+    "int",
+    "2",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/Kconfig",
+      27
+    ]
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_MAX_FILE_NAME",
+    "y",
+    "int",
+    "-1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/Kconfig",
+      35
+    ]
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_INIT_PRIORITY",
+    "y",
+    "int",
+    "99",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/Kconfig",
+      47
+    ]
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_MKFS",
+    "y",
+    "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_GC",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_APP_LINK_WITH_FS",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/Kconfig",
+      137
+    ]
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_FS_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_FAT_FILESYSTEM_ELM",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_LITTLEFS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_EXT2",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_UID_VALUE",
+    "y",
+    "int",
+    "0",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/fuse_client/Kconfig",
+      11
+    ]
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_GID_VALUE",
+    "y",
+    "int",
+    "0",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/fuse_client/Kconfig",
+      18
+    ]
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_PID_VALUE",
+    "y",
+    "int",
+    "0",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/fuse_client/Kconfig",
+      25
+    ]
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_FUSE_CLIENT_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_FILE_SYSTEM_VIRTIOFS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_DEBUG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_MAX_FILES",
+    "y",
+    "int",
+    "1024",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/virtiofs/Kconfig",
+      18
+    ]
+  ],
+  [
+    "CONFIG_VIRTIOFS_MAX_VQUEUE_SIZE",
+    "y",
+    "int",
+    "1024",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/virtiofs/Kconfig",
+      24
+    ]
+  ],
+  [
+    "CONFIG_VIRTIOFS_NO_NOTIFICATION_QUEUE_SLOT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/virtiofs/Kconfig",
+      30
+    ]
+  ],
+  [
+    "CONFIG_VIRTIOFS_VIRTIOFSD_UNLINK_QUIRK",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/virtiofs/Kconfig",
+      38
+    ]
+  ],
+  [
+    "CONFIG_VIRTIOFS_CREATE_MODE_VALUE",
+    "y",
+    "int",
+    "438",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/fs/virtiofs/Kconfig",
+      45
+    ]
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_VIRTIOFS_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
   ],
   [
     "CONFIG_FCB",
@@ -9675,6 +11696,22 @@
     null
   ],
   [
+    "CONFIG_LOG_BACKEND_FS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_LOG_BACKEND_MQTT",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
     "CONFIG_LOG_BACKEND_NET",
     "y",
     "bool",
@@ -9913,9 +11950,113 @@
     "CONFIG_NET_HOSTNAME_ENABLE",
     "y",
     "bool",
+    "y",
+    "select",
+    [
+      "POSIX_NETWORKING && NETWORKING && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_NET_HOSTNAME",
+    "y",
+    "string",
+    "zephyr",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.hostname",
+      16
+    ]
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_DYNAMIC",
+    "y",
+    "bool",
+    "y",
+    "select",
+    [
+      "POSIX_NETWORKING && NETWORKING && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_MAX_LEN",
+    "y",
+    "int",
+    "63",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.hostname",
+      31
+    ]
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_UNIQUE",
+    "y",
+    "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      9
+    ]
+  ],
+  [
+    "CONFIG_NET_HOSTNAME_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      55
+    ]
   ],
   [
     "CONFIG_NET_L2_DUMMY",
@@ -10761,6 +12902,17 @@
     [
       "/home/hl/zephyrproject/zephyr/subsys/net/ip/Kconfig.ipv6",
       192
+    ]
+  ],
+  [
+    "CONFIG_NET_IPV6_RA_RDNSS",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/ip/Kconfig.ipv6",
+      201
     ]
   ],
   [
@@ -12189,22 +14341,22 @@
     "CONFIG_NET_BUF_RX_COUNT",
     "y",
     "int",
-    "36",
-    "default",
+    "32",
+    "assign",
     [
-      "/home/hl/zephyrproject/zephyr/subsys/net/ip/Kconfig",
-      712
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      81
     ]
   ],
   [
     "CONFIG_NET_BUF_TX_COUNT",
     "y",
     "int",
-    "36",
-    "default",
+    "32",
+    "assign",
     [
-      "/home/hl/zephyrproject/zephyr/subsys/net/ip/Kconfig",
-      720
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      82
     ]
   ],
   [
@@ -12315,10 +14467,9 @@
     "y",
     "bool",
     "y",
-    "default",
+    "select",
     [
-      "/home/hl/zephyrproject/zephyr/subsys/net/ip/Kconfig",
-      881
+      "POSIX_NETWORKING && NETWORKING && POSIX_SYSTEM_INTERFACES"
     ]
   ],
   [
@@ -13114,6 +15265,234 @@
     "CONFIG_DNS_RESOLVER",
     "y",
     "bool",
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      70
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_AUTO_INIT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      17
+    ]
+  ],
+  [
+    "CONFIG_MDNS_RESOLVER",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_LLMNR_RESOLVER",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_ADDITIONAL_QUERIES",
+    "y",
+    "int",
+    "1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      40
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_AI_MAX_ENTRIES",
+    "y",
+    "int",
+    "2",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      49
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_MAX_SERVERS",
+    "y",
+    "int",
+    "1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      58
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_MAX_ANSWER_SIZE",
+    "y",
+    "int",
+    "512",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      67
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_MAX_QUERY_LEN",
+    "y",
+    "int",
+    "255",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      75
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_MAX_NAME_LEN",
+    "y",
+    "int",
+    "46",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      84
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_MAX_TEXT_LEN",
+    "y",
+    "int",
+    "64",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      95
+    ]
+  ],
+  [
+    "CONFIG_DNS_SERVER_IP_ADDRESSES",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RECONFIGURE_CLEANUP",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_NUM_CONCUR_QUERIES",
+    "y",
+    "int",
+    "1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      167
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      9
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      55
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_CACHE",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_PACKET_FORWARDING",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MDNS_RESPONDER",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_LLMNR_RESPONDER",
+    "y",
+    "bool",
     null,
     "unset",
     null
@@ -13125,6 +15504,90 @@
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER",
+    "n",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      386
+    ]
+  ],
+  [
+    "CONFIG_DNS_RESOLVER_ADDITIONAL_BUF_CTR",
+    "y",
+    "int",
+    "1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dns/Kconfig",
+      395
+    ]
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL_OFF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      9
+    ]
+  ],
+  [
+    "CONFIG_DNS_SOCKET_DISPATCHER_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      55
+    ]
   ],
   [
     "CONFIG_NET_LATMON",
@@ -13146,9 +15609,191 @@
     "CONFIG_MQTT_LIB",
     "y",
     "bool",
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      76
+    ]
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL_OFF",
+    "y",
+    "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      9
+    ]
+  ],
+  [
+    "CONFIG_MQTT_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/Kconfig.template.log_config.net",
+      55
+    ]
+  ],
+  [
+    "CONFIG_MQTT_VERSION_3_1_1",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/mqtt/Kconfig",
+      22
+    ]
+  ],
+  [
+    "CONFIG_MQTT_VERSION_5_0",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_KEEPALIVE",
+    "y",
+    "int",
+    "60",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/mqtt/Kconfig",
+      45
+    ]
+  ],
+  [
+    "CONFIG_MQTT_LIB_TLS",
+    "y",
+    "bool",
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      77
+    ]
+  ],
+  [
+    "CONFIG_MQTT_LIB_TLS_USE_ALPN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_LIB_WEBSOCKET",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_LIB_CUSTOM_TRANSPORT",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_CLEAN_SESSION",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_MQTT_USER_PROPERTIES_MAX",
+    "y",
+    "int",
+    "1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/mqtt/Kconfig",
+      88
+    ]
+  ],
+  [
+    "CONFIG_MQTT_SUBSCRIPTION_ID_PROPERTIES_MAX",
+    "y",
+    "int",
+    "1",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/mqtt/Kconfig",
+      96
+    ]
+  ],
+  [
+    "CONFIG_MQTT_TOPIC_ALIAS_MAX",
+    "y",
+    "int",
+    "5",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/mqtt/Kconfig",
+      104
+    ]
+  ],
+  [
+    "CONFIG_MQTT_TOPIC_ALIAS_STRING_MAX",
+    "y",
+    "int",
+    "64",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/mqtt/Kconfig",
+      112
+    ]
   ],
   [
     "CONFIG_MQTT_SN_LIB",
@@ -13439,6 +16084,9 @@
     "y",
     "select",
     [
+      "POSIX_NETWORKING && NETWORKING && POSIX_SYSTEM_INTERFACES",
+      "DNS_RESOLVER && NET_NATIVE && NETWORKING",
+      "MQTT_LIB && NETWORKING",
       "NET_DHCPV4_SERVER && NET_IPV4 && NET_UDP && NETWORKING"
     ]
   ],
@@ -13476,6 +16124,39 @@
     ]
   ],
   [
+    "CONFIG_NET_SOCKETS_DNS_TIMEOUT",
+    "y",
+    "int",
+    "2000",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/sockets/Kconfig",
+      44
+    ]
+  ],
+  [
+    "CONFIG_NET_SOCKETS_DNS_BACKOFF_INTERVAL",
+    "y",
+    "int",
+    "5000",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/sockets/Kconfig",
+      56
+    ]
+  ],
+  [
+    "CONFIG_HEAP_MEM_POOL_ADD_SIZE_GETADDRINFO",
+    "n",
+    "int",
+    "280",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/sockets/Kconfig",
+      76
+    ]
+  ],
+  [
     "CONFIG_NET_SOCKET_MAX_SEND_WAIT",
     "y",
     "int",
@@ -13493,6 +16174,8 @@
     "y",
     "select",
     [
+      "DNS_RESOLVER && NET_NATIVE && NETWORKING",
+      "DNS_SOCKET_DISPATCHER && (DNS_RESOLVER || MDNS_RESPONDER) && NETWORKING",
       "NET_DHCPV4_SERVER && NET_IPV4 && NET_UDP && NETWORKING"
     ]
   ],
@@ -13617,9 +16300,52 @@
     "CONFIG_NET_SOCKETPAIR",
     "y",
     "bool",
+    "y",
+    "select",
+    [
+      "POSIX_NETWORKING && NETWORKING && POSIX_SYSTEM_INTERFACES"
+    ]
+  ],
+  [
+    "CONFIG_NET_SOCKETPAIR_BUFFER_SIZE",
+    "y",
+    "int",
+    "64",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/sockets/Kconfig",
+      382
+    ]
+  ],
+  [
+    "CONFIG_NET_SOCKETPAIR_STATIC",
+    "y",
+    "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_NET_SOCKETPAIR_HEAP",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/sockets/Kconfig",
+      389
+    ]
+  ],
+  [
+    "CONFIG_HEAP_MEM_POOL_ADD_SIZE_SOCKETPAIR",
+    "n",
+    "int",
+    "296",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/sockets/Kconfig",
+      411
+    ]
   ],
   [
     "CONFIG_NET_SOCKETS_NET_MGMT",
@@ -13835,12 +16561,34 @@
     null
   ],
   [
+    "CONFIG_NET_DHCPV4_OPTION_DNS_ADDRESS",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dhcpv4/Kconfig",
+      86
+    ]
+  ],
+  [
     "CONFIG_NET_DHCPV4_OPTION_PRINT_IGNORED",
     "y",
     "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_NET_DHCPV4_DNS_SERVER_VIA_INTERFACE",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dhcpv4/Kconfig",
+      102
+    ]
   ],
   [
     "CONFIG_NET_DHCPV4_INIT_REBOOT",
@@ -14017,6 +16765,28 @@
     [
       "/home/hl/zephyrproject/zephyr/subsys/net/lib/dhcpv6/Kconfig",
       21
+    ]
+  ],
+  [
+    "CONFIG_NET_DHCPV6_OPTION_DNS_ADDRESS",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dhcpv6/Kconfig",
+      27
+    ]
+  ],
+  [
+    "CONFIG_NET_DHCPV6_DNS_SERVER_VIA_INTERFACE",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/net/lib/dhcpv6/Kconfig",
+      37
     ]
   ],
   [

@@ -14,8 +14,11 @@ set(GUI ${CMAKE_CURRENT_SOURCE_DIR}/modules/display/gui)
 # 自动配网相关
 set(ZEPHYR_WIFI_PROV ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/wifi_prov)
 
+# MQTT相关
+set(ZEPHYR_MQTT ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/mqtt)
+
 # 头文件搜索路径
-target_include_directories(app PRIVATE ${U8G2_CSRC} ${GUI} ${ZEPHYR_U8G2} ${ZEPHYR_WIFI_PROV})
+target_include_directories(app PRIVATE ${U8G2_CSRC} ${GUI} ${ZEPHYR_U8G2} ${ZEPHYR_WIFI_PROV} ${ZEPHYR_MQTT})
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
 target_compile_definitions(app PRIVATE
@@ -68,4 +71,8 @@ target_sources(app PRIVATE
     # --- WiFi 配网相关 ---
     ${ZEPHYR_WIFI_PROV}/wifi_prov_app.c
     ${ZEPHYR_WIFI_PROV}/wifi_provisioning.c
+
+    # --- MQTT 相关 ---
+    ${ZEPHYR_MQTT}/app_mqtt.c
+    ${ZEPHYR_MQTT}/mqtt_backend.c
 )

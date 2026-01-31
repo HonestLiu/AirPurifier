@@ -39,11 +39,21 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/lib/posix/eventfd/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/lib/posix/c_lang_support_r/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/lib/posix/c_lib_ext/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/lib/posix/options/cmake_install.cmake")
 endif()
 

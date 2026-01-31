@@ -223,6 +223,25 @@ rule C_STATIC_LIBRARY_LINKER__lib__libc__common_
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__lib__posix__eventfd_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__lib__posix__eventfd_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__lib__posix__c_lib_ext_unscanned_
   depfile = $DEP_FILE
   deps = gcc
@@ -234,6 +253,25 @@ rule C_COMPILER__lib__posix__c_lib_ext_unscanned_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__lib__posix__c_lib_ext_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__lib__posix__options_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__lib__posix__options_
   command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
@@ -272,6 +310,25 @@ rule C_COMPILER__lib__os__zvfs_unscanned_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__lib__os__zvfs_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__fs_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__fs_
   command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
@@ -394,6 +451,25 @@ rule C_STATIC_LIBRARY_LINKER__subsys__net__ip_
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__subsys__net__lib__mqtt_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net__lib__mqtt_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__subsys__net__lib__dhcpv4_unscanned_
   depfile = $DEP_FILE
   deps = gcc
@@ -405,6 +481,25 @@ rule C_COMPILER__subsys__net__lib__dhcpv4_unscanned_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__subsys__net__lib__dhcpv4_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__subsys__net__lib__dns_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__subsys__net__lib__dns_
   command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
@@ -557,6 +652,25 @@ rule C_COMPILER__drivers__gpio_unscanned_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__drivers__gpio_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__drivers__hwinfo_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__drivers__hwinfo_
   command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT

@@ -5,6 +5,7 @@
 
 #include "gui_app.h"
 #include "wifi_prov_app.h"
+#include "app_mqtt.h"
 
 /* 建议：增大 GUI 线程栈大小，u8g2 图形库比较消耗栈空间 */
 #define GUI_STACK_SIZE 2048
@@ -29,6 +30,24 @@ int main(void)
     /* 2. 这里的休眠只影响配网启动，不会阻塞 GUI 显示了 */
     printk("Starting WiFi Provisioning Service...\n");
     wifi_prov_app_start();
+
+    /* 3. 等待配网 */
+    int64_t start_time = k_uptime_get(); // 记录开始时间
+    // 每5秒检查一次，直到连接成功或超时
+    while (k_sem_take(&wifi_connected_sem, K_SECONDS(5)) != 0)
+    {
+        if(k_uptime_get() - start_time > K_HOURS(1).ticks * CONFIG_SYS_CLOCK_TICKS_PER_SEC / 1000) {
+            printk("WiFi Provisioning Timeout. Restarting...\n");
+            break; // 超时，跳出等待
+        }
+        printk("Waiting for WiFi connection...\n");
+        // 闪烁LED、喂看门狗
+    }
+
+    // 4. 启动 MQTT 客户端
+    app_mqtt_start();
+
+
 
     while (1)
     {
