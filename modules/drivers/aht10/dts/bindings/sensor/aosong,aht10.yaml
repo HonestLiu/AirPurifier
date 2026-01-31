@@ -1,0 +1,21 @@
+# Copyright (c) 2025 刘君
+# SPDX-License-Identifier: Apache-2.0
+
+description: Aosong AHT10/AHT20 temperature and humidity sensor
+
+compatible: "aosong,aht10"
+
+include: [sensor-device.yaml, i2c-device.yaml]
+
+properties:
+
+  # 可选：指定传感器 label（用于应用层识别）
+  label:
+    type: string
+    description: Human-readable label for the sensor
+
+  # 可选：电源域（如果硬件有使能引脚）
+  # vdd-supply:
+  #   type: phandle
+  #   description: Regulator for VDD
+

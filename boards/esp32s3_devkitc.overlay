@@ -1,0 +1,45 @@
+#include <zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h>
+#include <dt-bindings/pinctrl/esp32s3-pinctrl.h>
+// SDA GPIO1 ; SCL GPIO2
+/ {
+    aliases {
+        oled-display = &ssd1306_node;
+    };
+};
+
+/* 1. 必须将引脚定义在 &pinctrl 节点内部 */
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            /* 在 Zephyr v3.x+ 中，推荐使用这种宏格式 */
+            pinmux = <I2C0_SDA_GPIO1>,
+                     <I2C0_SCL_GPIO2>;
+            bias-pull-up;
+            drive-open-drain;
+            output-high;
+        };
+    };
+};
+
+/* 2. 修改 I2C0 控制器 */
+&i2c0 {
+    status = "okay";
+    clock-frequency = <I2C_BITRATE_STANDARD>;
+    /* 注意这里一定要有 & 符号！ */
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-names = "default";
+
+    ssd1306_node: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        width = <128>;
+        height = <64>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        prechargep = <0x22>;
+    };
+};

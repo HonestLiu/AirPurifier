@@ -1,0 +1,28 @@
+/ {
+    aliases {
+        oled-display = &ssd1306_node;
+    };
+};
+
+&i2c2 {
+    clock-frequency = <I2C_BITRATE_FAST>; 
+    pinctrl-0 = <&i2c2_scl_pb10 &i2c2_sda_pb11>;
+    pinctrl-names = "default";
+    status = "okay";
+
+    /* 定义 OLED 屏幕节点(实际并未使用 ssd1306 驱动) */
+    ssd1306_node: ssd1306@3c {    
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;          
+        status = "okay";
+        width = <128>;
+        height = <64>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        prechargep = <0x22>;
+    };
+};

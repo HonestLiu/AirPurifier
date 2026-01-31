@@ -1,0 +1,8 @@
+config DC01
+    bool "D01/DC01 Dust Sensor Driver"
+    default n
+    depends on DT_HAS_KUNLIU_DC01_ENABLED
+    select UART_INTERRUPT_DRIVEN
+    select RING_BUFFER
+    help
+      Enable driver for the D01 infrared dust sensor. [cite: 6]

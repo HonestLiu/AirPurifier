@@ -1,0 +1,17 @@
+# Copyright (c) 2025 刘君
+# SPDX-License-Identifier: Apache-2.0
+
+description: KunLiu DC01 PM2.5 sensor
+
+compatible: "kunliu,dc01"
+
+include: sensor-device.yaml
+
+properties:
+  # 可选：指定传感器 label（用于应用层识别）
+  label:
+    type: string
+    description: Sensor label
+    default: "DC01_PM25_Sensor"
+
+
