@@ -44,10 +44,18 @@ static struct k_thread dns_thread;
 
 static int http_server_fd = -1;
 static int dns_server_fd = -1;
-static atomic_t portal_running = ATOMIC_INIT(1);
+static atomic_t portal_running = ATOMIC_INIT(0); /* Default to 0, start on demand */
 static struct k_work portal_stop_work;
+static struct k_work_delayable ap_fallback_work; /* Work for delayed AP start */
 
 static void disable_ap_mode(void);
+static void start_ap_services(void);       /* Forward declaration */
+
+static void ap_fallback_work_handler(struct k_work *work)
+{
+    LOG_WRN("Wi-Fi 连接超时，启动 AP 配网模式...");
+    start_ap_services();
+}
 
 static void stop_captive_portal(void)
 {
@@ -549,6 +557,8 @@ int wifi_prov_init(struct net_if *ap, struct net_if *sta)
 	sta_iface = sta;
 	// 初始化停止 Captive Portal 的工作项
 	k_work_init(&portal_stop_work, portal_stop_work_handler);
+	// 初始化 AP 回退工作项（超时未连接则启动 AP）
+	k_work_init_delayable(&ap_fallback_work, ap_fallback_work_handler);
 
 	int ret = nvs_init();
 	if (ret == 0) {
@@ -567,8 +577,14 @@ int wifi_prov_init(struct net_if *ap, struct net_if *sta)
  * @brief 启动 Wi-Fi 配网模块（开启 Captive Portal）
  * @return 0 成功；负值表示错误
  */
-int wifi_prov_start(void)
+static void start_ap_services(void)
 {
+	if (atomic_get(&portal_running)) {
+		return;
+	}
+
+	LOG_INF("启动配网服务 (AP + HTTP + DNS)...");
+
 	// 启动 Captive Portal
 	atomic_set(&portal_running, 1);
 	// 启用 AP 模式（开启热点）
@@ -596,9 +612,28 @@ int wifi_prov_start(void)
 	} else {
 		LOG_ERR("无法为配网线程分配栈空间");
 	}
+}
 
-	// 尝试连接到已保存的 Wi-Fi 网络
-	return connect_to_wifi();
+/**
+ * @brief 启动 Wi-Fi 配网模块（开启 Captive Portal）
+ * @return 0 成功；负值表示错误
+ */
+int wifi_prov_start(void)
+{
+	/* 优化逻辑：如果有已保存的 Wi-Fi 信息，先尝试连接，超时再启动 AP */
+	if (sta_has_creds) {
+		LOG_INF("检测到已保存的配网信息，尝试连接 Wi-Fi (超时 20s)...");
+		
+		/* 启动 20秒 的超时回退计时器 */
+		k_work_schedule(&ap_fallback_work, K_SECONDS(20));
+		
+		/* 尝试连接 */
+		return connect_to_wifi();
+	} 
+	
+	/* 没有配置信息，直接启动 AP */
+	start_ap_services();
+	return 0;
 }
 
 void wifi_prov_stop(void)
@@ -608,6 +643,10 @@ void wifi_prov_stop(void)
 
 void wifi_prov_on_sta_connected(void)
 {
+	/* 成功连接：取消 AP 回退计时器 */
+	k_work_cancel_delayable(&ap_fallback_work);
+	
+	/* 停止配网服务（如果正在运行） */
 	k_work_submit(&portal_stop_work);
 }
 

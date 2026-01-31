@@ -128,7 +128,7 @@ int wifi_prov_app_stop(void)
 
 #if CONFIG_WIFI_SAMPLE_DHCPV4_START
 	net_dhcpv4_server_stop(ap_iface);
-	LOG_INF("DHCPv4 服务器已停止。");
+	LOG_INF("DHCPv4 服务器已停止");
 #endif
 
 	net_mgmt_del_event_callback(&cb);
