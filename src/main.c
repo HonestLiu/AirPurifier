@@ -1,3 +1,11 @@
+/**
+ * @file main.c
+ * @author HL 
+ * @brief 空气净化器主应用程序入口
+ * @version 1.0
+ * @date 2026-2-2
+ * @note 主体控制逻辑位于services模块中的control_center，此处负责初始化各子模块
+ */
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <u8g2.h>
@@ -11,6 +19,7 @@
 #include "tovc_301.h"
 #include "aht10_app.h"
 #include "fan.h"
+#include "status_indicator.h"
 
 
 // U8G2 GUI
@@ -75,6 +84,9 @@ int main(void)
 
     // 8. 启动风扇控制应用
     fan_app_start();
+
+    // 9. 启动状态指示灯服务
+    status_indicator_init();
 
     while (1)
     {

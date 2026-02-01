@@ -34,8 +34,14 @@ set(AHT10_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/aht10_app)
 # 风扇驱动
 set(FAN_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/fan)
 
+# RGB PWM LED 驱动
+set(RGB_PWM_LED_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/rgb_led)
+
 # 控制中心
 set(CONTROL_CENTER ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/control_center)
+
+# 状态指示服务
+set(STATUS_INDICATOR ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/status_indicator)
 
 # 头文件搜索路径
 target_include_directories(app PRIVATE 
@@ -50,6 +56,8 @@ target_include_directories(app PRIVATE
     ${AHT10_DRIVER}
     ${FAN_DRIVER}
     ${CONTROL_CENTER}
+    ${STATUS_INDICATOR}
+    ${RGB_PWM_LED_DRIVER}
 )
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
@@ -125,4 +133,10 @@ target_sources(app PRIVATE
 
     # --- 控制中心 ---
     ${CONTROL_CENTER}/control_center.c
+
+    # --- 状态指示服务 ---
+    ${STATUS_INDICATOR}/status_indicator.c
+
+    # --- RGB PWM LED 驱动 ---
+    ${RGB_PWM_LED_DRIVER}/rgb_led.c
 )

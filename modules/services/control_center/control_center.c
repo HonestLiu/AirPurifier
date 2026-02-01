@@ -3,6 +3,7 @@
 #include <zephyr/sys/printk.h>
 #include "gui.h"
 #include "fan.h"
+#include "status_indicator.h"
 
 // --- 消息定义 ---
 typedef enum {
@@ -41,6 +42,19 @@ static air_purifier_status_t g_status = {
 };
 
 // --- 核心逻辑 ---
+static void push_status_indicator_update(void) {
+    status_indicator_inputs_t inputs = {
+        .wifi_connected = g_status.wifi_connected,
+        .alert_high_pollution = g_status.alert_high_pollution,
+        .alert_replace_filter = g_status.alert_replace_filter,
+        .manual_mode = (g_status.mode == MODE_MANUAL),
+        .night_mode = (g_status.mode == MODE_NIGHT),
+        .fan_running = (g_status.fan_speed_enum > 0),
+    };
+
+    status_indicator_sync(&inputs);
+}
+
 static void update_system_logic(void) {
     // 1. 警告
     bool pollution_warning = (g_status.pm25_val > 150) || (g_status.tvoc_val > 1000);
@@ -77,6 +91,7 @@ static void update_system_logic(void) {
              gui_set_fan(g_status.fan_speed_enum > 0);
          }
     }
+    push_status_indicator_update();
 }
 
 

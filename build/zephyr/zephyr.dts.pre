@@ -1072,6 +1072,9 @@ zephyr_udc0: &usb_otg {
         tovc-301 = &uart2;
         aosong-aht10 = &aht10_i2c1;
         fan-pwm = &pwm_output;
+        red-pwm-led = &red_pwm_led;
+  green-pwm-led = &green_pwm_led;
+  blue-pwm-led = &blue_pwm_led;
     };
 
     wifi_ap: wifi_ap {
@@ -1085,6 +1088,18 @@ zephyr_udc0: &usb_otg {
 
             pwms = <&ledc0 0 55556 (0 << 0)>;
             label = "PWM_TEST_OUT";
+        };
+        red_pwm_led: red_pwm_led_node {
+            pwms = <&ledc0 1 1000000 (0 << 0)>;
+            label = "RED_PWM_LED";
+        };
+        green_pwm_led: green_pwm_led_node {
+            pwms = <&ledc0 2 1000000 (0 << 0)>;
+            label = "GREEN_PWM_LED";
+        };
+        blue_pwm_led: blue_pwm_led_node {
+            pwms = <&ledc0 3 1000000 (0 << 0)>;
+            label = "BLUE_PWM_LED";
         };
     };
 
@@ -1139,6 +1154,16 @@ zephyr_udc0: &usb_otg {
                         bias-pull-up;
                 };
         };
+
+    ledc0_default: ledc0_default {
+        group1 {
+            pinmux = <(((13 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((73 & 0x1FFU) << 15U))>,
+                     <(((40 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((74 & 0x1FFU) << 15U))>,
+         <(((41 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((75 & 0x1FFU) << 15U))>,
+         <(((42 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((76 & 0x1FFU) << 15U))>;
+   output-enable;
+        };
+    };
 };
 
 
@@ -1165,6 +1190,7 @@ zephyr_udc0: &usb_otg {
     };
 };
 
+
 &i2c1 {
     status = "okay";
     clock-frequency = <100000>;
@@ -1182,14 +1208,12 @@ zephyr_udc0: &usb_otg {
 };
 
 
-
 &uart1 {
         status = "okay";
         current-speed = <9600>;
         pinctrl-0 = <&uart1_default>;
         pinctrl-names = "default";
 };
-
 
 
 &uart2 {
@@ -1212,16 +1236,17 @@ zephyr_udc0: &usb_otg {
         reg = <0x0>;
         timer = <0>;
     };
-};
-
-
-&pinctrl {
-    ledc0_default: ledc0_default {
-        group1 {
-
-            pinmux = <(((13 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((73 & 0x1FFU) << 15U))>;
-            output-enable;
-        };
+    channel1@1 {
+        reg = <0x1>;
+        timer = <1>;
+    };
+    channel2@2 {
+        reg = <0x2>;
+        timer = <1>;
+    };
+    channel3@3 {
+        reg = <0x3>;
+        timer = <1>;
     };
 };
 # 0 "<command-line>" 2
