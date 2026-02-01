@@ -3,15 +3,17 @@
 
 #include <u8g2.h>
 #include <stdbool.h>
+#include <zephyr/types.h>
+#include <zephyr/kernel.h>
 
 typedef struct {
     // 数值动态化
     uint16_t   pm25_raw;   // 原始 PM2.5 数据
     uint16_t   humidity;   // 湿度百分比
-    uint16_t   temp;       // 温度摄氏度
+    int16_t    temp;       // 温度摄氏度
     uint16_t   hcho;       // 甲醛数值
     uint16_t   co2;        // CO2数值
-    uint16_t   tovc;       // TOVC数值
+    uint16_t   tvoc;       // TOVC数值
 
 
     // 图标/元素显示控制 (bool)
@@ -27,6 +29,49 @@ typedef struct {
 
 } ui_config_t;
 
+// GUI 事件类型
+typedef enum {
+    GUI_EVT_PM25,
+    GUI_EVT_TEMP_HUM,
+    GUI_EVT_ENV,        // TVOC, HCHO, CO2
+    GUI_EVT_WIFI,
+    GUI_EVT_FAN,
+    GUI_EVT_WARNING,
+    GUI_EVT_AUTO_MODE,
+    GUI_EVT_HUMIDITY_ICON,
+    GUI_EVT_TEMP_ICON
+} gui_evt_type_t;
+
+// GUI 消息结构体
+typedef struct {
+    gui_evt_type_t type;
+    union {
+        uint16_t u16_val; // 通用 P2.5 等
+        struct {
+            int16_t temp;
+            uint16_t hum;
+        } th;
+        struct {
+            uint16_t tvoc; // ug/m3
+            uint16_t hcho; // ug/m3
+            uint16_t eco2; // ppm
+        } env;
+        bool b_val;       // 图标状态
+    } data;
+} gui_msg_t;
+
+// --- 公共 API 用于发送更新 ---
+void gui_set_pm25(uint16_t val);
+void gui_set_temp_hum(int16_t temp, uint16_t hum);
+void gui_set_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2);
+void gui_set_wifi(bool active);
+void gui_set_fan(bool active);
+void gui_set_warning(bool active);
+void gui_set_auto_mode(bool active);
+
+
+// 渲染函数 (仅供 GUI 线程调用)
+void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg);
 
 // 湿度图标
 static const uint8_t temp_bits[] = {0x00,0x00,0x80,0x01,0xc0,0x03,0xe0,0x06,0x70,0x0c,0x30,0x18,0x18,0x38,0x18,0x30,0x0c,0x30,0x0c,0x68,0x0c,0x6c,0x0c,0x3c,0x18,0x37,0x30,0x1f,0xe0,0x0f,0x80,0x01};
@@ -44,6 +89,10 @@ static const uint8_t warning_bits[] = {0xe0,0x03,0x18,0x0c,0xc4,0x10,0x42,0x21,0
 static const uint8_t wifi_bits[] = {0x00,0x00,0x00,0x00,0xf0,0x0f,0xfc,0x3f,0xff,0xff,0x1f,0xf8,0xe7,0xe7,0xfa,0x5f,0xfc,0x3f,0x38,0x1c,0x90,0x09,0xe0,0x07,0xc0,0x03,0x80,0x01,0x00,0x00,0x00,0x00};
 
 
+// 暴露消息队列供 gui_app.c 使用
+extern struct k_msgq gui_msgq;
+
+// 渲染函数 (仅供 GUI 线程调用)
 void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg);
 
 #endif // __GUI_H__

@@ -19,65 +19,74 @@ int u8g2_init(u8g2_t *u8g2)
     return 0;
 }
 
-K_MSGQ_DEFINE(d01_msgq, sizeof(uint16_t), 10, 4);
-
-/* 模拟数据生成线程 (后续接入传感器只需往队列发数据即可) */
-void mock_sensor_task(void)
-{
-    uint16_t mock_val;
-    while (1)
-    {
-        mock_val = 40 + (rand() % 200);
-        k_msgq_put(&d01_msgq, &mock_val, K_NO_WAIT);
-        k_msleep(1000);
-    }
-}
-K_THREAD_DEFINE(mock_tid, 1024, mock_sensor_task, NULL, NULL, NULL, 7, 0, 0);
-
 /* GUI 渲染线程 */
 void gui_thread_func(void *a, void *b, void *c)
 {
     printk("GUI thread started\n");
     u8g2_t u8g2;
 
-    /* 初始化 u8g2：
-       - 使用 SSD1306 128x64 非标驱动 (noname)
-       - 全缓冲模式 (f)
-       - 硬件 I2C 接口
-    */
+    /* 初始化 u8g2 */
     u8g2_init(&u8g2);
 
-    uint16_t raw_data;
+    gui_msg_t msg;
+
     // 初始化配置：默认全部开启显示
     ui_config_t display_cfg = {
-        .show_wifi = true,     // 显示wifi图标
+        .show_wifi = false,    // 默认不显示，直到连接
         .show_fan = true,      // 显示风扇图标
         .auto_mode = true,     // 显示自动模式图标
-        .show_warning = true,  // 显示警告图标
+        .show_warning = false, // 默认不显示警告
         .show_humidity = true, // 显示湿度逻辑
         .show_temp = true,     // 显示温度逻辑
         .show_hcho = true,     // 显示甲醛逻辑
-        .humidity = 40,        // 湿度百分比
-        .temp = 24,            // 温度摄氏度
-        .hcho = 1,             // 甲醛数值
+        .pm25_raw = 0,
+        .humidity = 0,
+        .temp = 0,
+        .hcho = 0,
     };
+
+    // 先渲染一帧初始界面
+    gui_render_screen(&u8g2, &display_cfg);
 
     while (1)
     {
-        // 等待数据包（模拟或真实串口 ISR 均可）
-        if (k_msgq_get(&d01_msgq, &raw_data, K_FOREVER) == 0)
+        // 阻塞等待消息
+        if (k_msgq_get(&gui_msgq, &msg, K_FOREVER) == 0)
         {
+            // 根据消息类型更新本地状态
+            switch (msg.type) {
+                case GUI_EVT_PM25:
+                    display_cfg.pm25_raw = msg.data.u16_val;
+                    // 自定义警告逻辑：PM2.5 > 150 显示警告
+                    // 如果需要业务逻辑控制，也可以由外部发 GUI_EVT_WARNING 消息
+                    // display_cfg.show_warning = (display_cfg.pm25_raw > 1500); // 假设是x10
+                    break;
+                case GUI_EVT_TEMP_HUM:
+                    display_cfg.temp = msg.data.th.temp;
+                    display_cfg.humidity = msg.data.th.hum;
+                    break;
+                case GUI_EVT_ENV:
+                    display_cfg.tvoc = msg.data.env.tvoc;
+                    display_cfg.hcho = msg.data.env.hcho;
+                    display_cfg.co2  = msg.data.env.eco2;
+                    break;
+                case GUI_EVT_WIFI:
+                    display_cfg.show_wifi = msg.data.b_val;
+                    break;
+                case GUI_EVT_FAN:
+                    display_cfg.show_fan = msg.data.b_val;
+                    break;
+                case GUI_EVT_WARNING:
+                    display_cfg.show_warning = msg.data.b_val;
+                    break;
+                case GUI_EVT_AUTO_MODE:
+                    display_cfg.auto_mode = msg.data.b_val;
+                    break;
+                default:
+                    break;
+            }
 
-            // 1. 动态更新 PM2.5 数据
-            display_cfg.pm25_raw = raw_data;
-
-            // 2. 模拟动态逻辑：高浓度时隐藏 WiFi 显示警告
-            display_cfg.show_warning = (raw_data > 150);
-
-            // 3. 模拟动态逻辑：随机变动温湿度
-            display_cfg.humidity = 40 + (rand() % 5);
-
-            // 4. 调用 GUI 封装层进行渲染
+            // 更新屏幕
             gui_render_screen(&u8g2, &display_cfg);
         }
     }

@@ -478,6 +478,7 @@ set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000
 set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|use-internal-iref" "False")
 set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|height" "64")
 set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|width" "128")
+set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|status" "okay")
 set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|compatible" "solomon,ssd1306fb;")
 set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|reg" "60;")
 set_target_properties(${DEVICETREE_TARGET} PROPERTIES "DT_PROP|/soc/i2c@60013000/ssd1306@3c|zephyr,deferred-init" "False")
