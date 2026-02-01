@@ -63,8 +63,12 @@ static void dc01_serial_cb(const struct device *dev, void *user_data)
     }
 }
 
-
-uint16_t read_dc01_raw_value(k_timeout_t timeout)
+/**
+ * @brief 从消息队列读取 DC01 原始 PM2.5 值
+ * @param timeout 超时时间
+ * @return 读取到的 PM2.5 原始值
+ */
+uint32_t read_dc01_raw_value(k_timeout_t timeout)
 {
     uint16_t pm25_value;
     k_msgq_get(&sensor_msgq, &pm25_value, timeout);
@@ -79,10 +83,11 @@ void dc01_sensor_thread_entry(void *p1, void *p2, void *p3)
     {
         pm25_raw = read_dc01_raw_value(K_FOREVER);
 
+        // 说明书公式：PM2.5 = (Raw * 4) / 10 
         struct sensor_event ev = {
             .type = SENSOR_DC01_PM25,
             .timestamp = k_uptime_get(),
-            .data.pm25_raw = pm25_raw,
+            .data.pm25_raw_x10 = (uint32_t)pm25_raw * 4, // [此处以十倍精度发送到传感器中心，后续使用时再除以10]
         };
 
         sensor_hub_send(&ev, K_NO_WAIT);

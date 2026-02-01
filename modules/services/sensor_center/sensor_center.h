@@ -10,7 +10,7 @@ struct sensor_event {
     } type;
     int64_t timestamp;
     union {
-        uint16_t pm25_raw;
+        uint32_t pm25_raw_x10; // PM2.5 原始值，放大10倍以支持小数
     } data;
 };
 

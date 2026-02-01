@@ -17,11 +17,14 @@ int sensor_hub_send(const struct sensor_event *ev, k_timeout_t timeout)
     return k_msgq_put(&sensor_hub_queue, ev, timeout);
 }
 
-void dc01_data_process(uint16_t pm25_raw) {
-    uint32_t total_x10 = (uint32_t)pm25_raw * 4;
-                    uint32_t integer_part = total_x10 / 10; // 整数部分
-                    uint32_t decimal_part = total_x10 % 10; // 小数部分（十分位）
-    printk("[DATA] Raw: %u | Concentration: %u.%u ug/m3\n",pm25_raw, integer_part, decimal_part);
+/**
+ * @brief 处理 DC01 传感器数据
+ * @param pm25_raw_x10 放大10倍的 PM2.5 原始值
+ */
+void dc01_data_process(uint32_t pm25_raw_x10) {
+    uint32_t integer_part = pm25_raw_x10 / 10; // 整数部分
+    uint32_t decimal_part = pm25_raw_x10 % 10; // 小数部分（十分位）
+    printk("[DATA] Raw: %u | Concentration: %u.%u ug/m3\n",pm25_raw_x10 / 4, integer_part, decimal_part);
     // 这里可以添加更多处理逻辑，比如数据存储、上报等
 }
 
@@ -36,7 +39,7 @@ void sensor_hub_thread(void *p1, void *p2, void *p3)
             // 分发逻辑...
             switch (ev.type) {
                 case SENSOR_DC01_PM25:
-                    dc01_data_process(ev.data.pm25_raw);
+                    dc01_data_process(ev.data.pm25_raw_x10 / 10); // 传入原始值除以10后的结果
                     break;
                 default:
                     printk("Unknown sensor event type: %d\n", ev.type);
