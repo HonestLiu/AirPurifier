@@ -23,6 +23,9 @@ set(SENSOR_CENTER ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/sensor_center)
 # DC01 传感器驱动
 set(DC01_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/dc01)
 
+# TOVC-301 传感器驱动
+set(TOVC_301_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/tovc_301)
+
 # 头文件搜索路径
 target_include_directories(app PRIVATE 
     ${U8G2_CSRC} 
@@ -30,8 +33,9 @@ target_include_directories(app PRIVATE
     ${ZEPHYR_U8G2} 
     ${ZEPHYR_WIFI_PROV} 
     ${ZEPHYR_MQTT} 
-    ${DC01_DRIVER}
     ${SENSOR_CENTER}
+    ${DC01_DRIVER}
+    ${TOVC_301_DRIVER}
 )
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
@@ -95,4 +99,7 @@ target_sources(app PRIVATE
 
     # --- DC01 传感器驱动 ---
     ${DC01_DRIVER}/dc01_app.c
+
+    # --- TOVC-301 传感器驱动 ---
+    ${TOVC_301_DRIVER}/tovc_301.c
 )

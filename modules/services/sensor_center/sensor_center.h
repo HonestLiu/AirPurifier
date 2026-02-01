@@ -7,10 +7,14 @@
 struct sensor_event {
     enum { 
         SENSOR_DC01_PM25,
+        SENSOR_TOVC_301,
     } type;
     int64_t timestamp;
     union {
         uint32_t pm25_raw_x10; // PM2.5 原始值，放大10倍以支持小数
+        uint16_t tvoc; // ug/m3
+        uint16_t hcho; // ug/m3
+        uint16_t eco2; // ppm
     } data;
 };
 

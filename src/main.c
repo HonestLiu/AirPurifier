@@ -6,8 +6,10 @@
 #include "gui_app.h"
 #include "wifi_prov_app.h"
 #include "app_mqtt.h"
-#include "dc01_app.h"
 #include "sensor_center.h"
+#include "dc01_app.h"
+#include "tovc_301.h"
+
 
 // U8G2 GUI
 #define GUI_STACK_SIZE 2048
@@ -26,14 +28,14 @@ int main(void)
     printk("Air Purifier Application Start\n");
 
     /* 1. 先创建并启动 GUI 线程，确保上电屏幕立刻显示 */
-    k_tid_t gui_tid = k_thread_create(&gui_thread_data, gui_stack,
+    k_thread_create(&gui_thread_data, gui_stack,
                                       K_THREAD_STACK_SIZEOF(gui_stack),
                                       gui_thread_func,
                                       NULL, NULL, NULL,
                                       5, 0, K_NO_WAIT);
 
     /* 启动传感器中心处理线程 */
-    k_tid_t sensor_hub_tid = k_thread_create(&sensor_hub_thread_data, sensor_hub_stack,
+    k_thread_create(&sensor_hub_thread_data, sensor_hub_stack,
                                              K_THREAD_STACK_SIZEOF(sensor_hub_stack),
                                              sensor_hub_thread,
                                              NULL, NULL, NULL,
@@ -62,6 +64,9 @@ int main(void)
 
     // 5. 启动 DC01 传感器应用
     dc01_sensor_app_start();
+
+    // 6. 启动 TOVC-301 传感器应用
+    tovc_sensor_app_start();
 
     while (1)
     {

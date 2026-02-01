@@ -28,6 +28,12 @@ void dc01_data_process(uint32_t pm25_raw_x10) {
     // 这里可以添加更多处理逻辑，比如数据存储、上报等
 }
 
+void tovc_data_process(uint16_t tvoc, uint16_t hcho, uint16_t eco2) {
+    printk("[TVOC] %u ug/m3 | [HCHO] %u ug/m3 | [eCO2] %u ppm\n", 
+            tvoc, hcho, eco2);
+    // 这里可以添加更多处理逻辑，比如数据存储、上报等
+}
+
 /**
  * @brief 传感器中心处理线程入口
  * */
@@ -40,6 +46,9 @@ void sensor_hub_thread(void *p1, void *p2, void *p3)
             switch (ev.type) {
                 case SENSOR_DC01_PM25:
                     dc01_data_process(ev.data.pm25_raw_x10 / 10); // 传入原始值除以10后的结果
+                    break;
+                case SENSOR_TOVC_301:
+                    tovc_data_process(ev.data.tvoc, ev.data.hcho, ev.data.eco2);
                     break;
                 default:
                     printk("Unknown sensor event type: %d\n", ev.type);

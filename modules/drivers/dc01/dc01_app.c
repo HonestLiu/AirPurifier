@@ -4,7 +4,7 @@
 #include <string.h>
 #include <zephyr/sys/printk.h>
 #include "dc01_app.h"
-    
+
 /* 获取设备树别名定义的串口 */
 #define DC01_NODE DT_ALIAS(dc_01)
 static const struct device *const dc01_dev = DEVICE_DT_GET(DC01_NODE);
@@ -82,34 +82,27 @@ void dc01_sensor_thread_entry(void *p1, void *p2, void *p3)
     while (1)
     {
         pm25_raw = read_dc01_raw_value(K_FOREVER);
+        uint32_t total_x10 = (uint32_t)pm25_raw * 4;
 
-        // 说明书公式：PM2.5 = (Raw * 4) / 10 
+#if SENSOR_CENTER_ENABLED   // 使用传感器中心模块
+        // 说明书公式：PM2.5 = (Raw * 4) / 10
         struct sensor_event ev = {
             .type = SENSOR_DC01_PM25,
             .timestamp = k_uptime_get(),
-            .data.pm25_raw_x10 = (uint32_t)pm25_raw * 4, // [此处以十倍精度发送到传感器中心，后续使用时再除以10]
+            .data.pm25_raw_x10 = total_x10, // [此处以十倍精度发送到传感器中心，后续使用时再除以10]
         };
 
         sensor_hub_send(&ev, K_NO_WAIT);
+#else   // 直接打印显示
+
+        uint32_t integer_part = total_x10 / 10; // 整数部分
+        uint32_t decimal_part = total_x10 % 10; // 小数部分（十分位）
+
+        /* 使用 %u.%u 格式拼接，避免使用 %f */
+        printk("[DATA] Raw: %u | Concentration: %u.%u ug/m3\n", pm25_raw, integer_part, decimal_part);
+#endif
 
         k_sleep(K_MSEC(1000));
-
-        // /* 阻塞等待解析出的传感器数据 */
-        // if (k_msgq_get(&sensor_msgq, &pm25_raw, K_FOREVER) == 0)
-        // {
-
-        //     /* * 整数模拟浮点逻辑：
-        //      * 说明书公式：PM2.5 = Raw * 0.4
-        //      * 我们可以转为：PM2.5 = (Raw * 4) / 10
-        //      */
-        //     uint32_t total_x10 = (uint32_t)pm25_raw * 4;
-        //     uint32_t integer_part = total_x10 / 10; // 整数部分
-        //     uint32_t decimal_part = total_x10 % 10; // 小数部分（十分位）
-
-        //     /* 使用 %u.%u 格式拼接，避免使用 %f */
-        //     printk("[DATA] Raw: %u | Concentration: %u.%u ug/m3\n",
-        //            pm25_raw, integer_part, decimal_part);
-        // }
     }
 }
 
@@ -140,7 +133,6 @@ int dc01_sensor_app_start(void)
     /* 绑定回调并使能接收中断 */
     uart_irq_callback_user_data_set(dc01_dev, dc01_serial_cb, NULL);
     uart_irq_rx_enable(dc01_dev);
-    
 
     k_thread_create(&dc01_sensor_thread, dc01_sensor_stack,
                     K_THREAD_STACK_SIZEOF(dc01_sensor_stack),
