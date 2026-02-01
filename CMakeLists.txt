@@ -34,6 +34,9 @@ set(AHT10_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/aht10_app)
 # 风扇驱动
 set(FAN_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/fan)
 
+# 控制中心
+set(CONTROL_CENTER ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/control_center)
+
 # 头文件搜索路径
 target_include_directories(app PRIVATE 
     ${U8G2_CSRC} 
@@ -46,6 +49,7 @@ target_include_directories(app PRIVATE
     ${TOVC_301_DRIVER}
     ${AHT10_DRIVER}
     ${FAN_DRIVER}
+    ${CONTROL_CENTER}
 )
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
@@ -118,4 +122,7 @@ target_sources(app PRIVATE
 
     # --- 风扇驱动 ---
     ${FAN_DRIVER}/fan.c
+
+    # --- 控制中心 ---
+    ${CONTROL_CENTER}/control_center.c
 )

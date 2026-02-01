@@ -39,5 +39,4 @@ extern struct k_msgq sensor_hub_queue;
 int sensor_hub_send(const struct sensor_event *ev, k_timeout_t timeout);
 void sensor_hub_thread(void *p1, void *p2, void *p3);
 
-
 #endif // !__SENSOR_CENTER_H

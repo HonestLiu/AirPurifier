@@ -60,18 +60,7 @@ typedef struct {
     } data;
 } gui_msg_t;
 
-// --- 公共 API 用于发送更新 ---
-void gui_set_pm25(uint16_t val);
-void gui_set_temp_hum(int16_t temp, uint16_t hum);
-void gui_set_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2);
-void gui_set_wifi(bool active);
-void gui_set_fan(bool active);
-void gui_set_warning(bool active);
-void gui_set_auto_mode(bool active);
 
-
-// 渲染函数 (仅供 GUI 线程调用)
-void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg);
 
 // 湿度图标
 static const uint8_t temp_bits[] = {0x00,0x00,0x80,0x01,0xc0,0x03,0xe0,0x06,0x70,0x0c,0x30,0x18,0x18,0x38,0x18,0x30,0x0c,0x30,0x0c,0x68,0x0c,0x6c,0x0c,0x3c,0x18,0x37,0x30,0x1f,0xe0,0x0f,0x80,0x01};
@@ -91,6 +80,19 @@ static const uint8_t wifi_bits[] = {0x00,0x00,0x00,0x00,0xf0,0x0f,0xfc,0x3f,0xff
 
 // 暴露消息队列供 gui_app.c 使用
 extern struct k_msgq gui_msgq;
+
+// 渲染函数 (仅供 GUI 线程调用)
+void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg);
+
+// --- 公共 API 用于发送更新 ---
+void gui_set_pm25(uint16_t val);
+void gui_set_temp_hum(int16_t temp, uint16_t hum);
+void gui_set_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2);
+void gui_set_wifi(bool active);
+void gui_set_fan(bool active);
+void gui_set_warning(bool active);
+void gui_set_auto_mode(bool active);
+
 
 // 渲染函数 (仅供 GUI 线程调用)
 void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg);

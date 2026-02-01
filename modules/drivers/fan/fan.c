@@ -29,20 +29,13 @@ static const struct pwm_dt_spec pwm_dev = PWM_DT_SPEC_GET(FAN_NODE);
 static K_THREAD_STACK_DEFINE(fan_control_stack, FAN_CONTROL_STACK_SIZE);
 static struct k_thread fan_control_thread;
 
-void fan_control_thread_entry(void *p1, void *p2, void *p3)
-{
-    uint8_t duty_cycle = MIN_DUTY;
-
-    while (1) {
-        // 后续从算法和MQTT获取风速
-        printk("Fan Control Thread Running\n");
-        k_sleep(K_SECONDS(1));
-    }
-}
+// 目标占空比和当前占空比，用于平滑过渡
+static uint8_t target_duty = MIN_DUTY;
+static uint8_t current_duty = MIN_DUTY;
 
 /* 设置 PWM 占空比 */
 static int set_motor_pwm(uint8_t duty_cycle) {
-    if (duty_cycle < MIN_DUTY) duty_cycle = MIN_DUTY;
+    if (duty_cycle < 0) duty_cycle = 0; // Configurable MIN?
     if (duty_cycle > MAX_DUTY) duty_cycle = MAX_DUTY;
 
     // 计算脉宽：pulse = period * duty / 100
@@ -50,11 +43,42 @@ static int set_motor_pwm(uint8_t duty_cycle) {
  
     int ret = pwm_set_dt(&pwm_dev, PERIOD_NS, pulse_ns);
     if (ret) {
-        printk("Error %d: failed to set pulse width\n", ret);
+        // printk("Error %d: failed to set pulse width\n", ret);
         return ret;
     }
-    printk("Fan Speed: %d%% (Pulse: %d ns)\n", duty_cycle, pulse_ns);
     return 0;
+}
+
+void fan_set_speed(fan_speed_t speed) {
+    switch (speed) {
+        case FAN_SPEED_OFF: target_duty = 0; break;
+        case FAN_SPEED_LOW: target_duty = 30; break;
+        case FAN_SPEED_MEDIUM: target_duty = 60; break;
+        case FAN_SPEED_HIGH: target_duty = 100; break;
+        default: break;
+    }
+    printk("[FAN] Set Target Speed Level: %d (Duty: %d%%)\n", speed, target_duty);
+}
+
+void fan_control_thread_entry(void *p1, void *p2, void *p3)
+{
+    // 初始化
+    set_motor_pwm(current_duty);
+
+    while (1) {
+        // 平滑过渡逻辑
+        if (current_duty != target_duty) {
+            if (current_duty < target_duty) {
+                current_duty++;
+            } else {
+                current_duty--;
+            }
+            set_motor_pwm(current_duty);
+            k_sleep(K_MSEC(20)); // 20ms * 100 steps = 2s full ramp. Adjust as needed.
+        } else {
+            k_sleep(K_MSEC(100));
+        }
+    }
 }
 
 int fan_app_start(void) {

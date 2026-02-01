@@ -1,0 +1,205 @@
+#include "control_center.h"
+#include <string.h>
+#include <zephyr/sys/printk.h>
+#include "gui.h"
+#include "fan.h"
+
+// --- 消息定义 ---
+typedef enum {
+    CTRL_EVT_PM25,      // PM2.5 数据
+    CTRL_EVT_ENV,       // TVOC, HCHO, eCO2 数据
+    CTRL_EVT_TH,        // 温湿度数据
+    CTRL_EVT_CMD_MODE,  // 设置模式命令
+    CTRL_EVT_CMD_FAN    // 设置风速命令
+} ctrl_evt_type_t;
+
+typedef struct {
+    ctrl_evt_type_t type;                               // 事件类型
+    union { 
+        uint32_t pm25;                                  // PM2.5 数据
+        struct { uint16_t tvoc, hcho, eco2; } env;      // 环境数据
+        struct { float temp, hum; } th;                 // 温湿度数据
+        int  fan_speed_enum;                            // 风速枚举
+        char mode_str[16];                              // 模式字符串
+    } data;
+} ctrl_msg_t;
+
+K_MSGQ_DEFINE(control_msgq, sizeof(ctrl_msg_t), 20, 4);
+
+// 全局状态
+static air_purifier_status_t g_status = {
+    .mode = MODE_AUTO,                                              // 默认自动模式
+    .fan_speed_enum = 0,                                            // 默认风速OFF
+    .filter_life_hours = 0,                                         // 过滤器寿命
+    .alert_high_pollution = false,                                  // 默认无警告
+    .alert_replace_filter = false,                                  // 默认无警告
+    .pm25_val = 0, .tvoc_val = 0, .hcho_val = 0, .eco2_val = 400,   // 默认环境值
+    .temp_val = 25.0f, .hum_val = 50.0f
+};
+
+// --- 核心逻辑 ---
+static void update_system_logic(void) {
+    // 1. 警告
+    bool pollution_warning = (g_status.pm25_val > 150) || (g_status.tvoc_val > 1000);
+    g_status.alert_high_pollution = pollution_warning;
+    bool filter_warning = (g_status.filter_life_hours > 300);
+    g_status.alert_replace_filter = filter_warning;
+
+    gui_set_warning(pollution_warning || filter_warning); // 异步发送到GUI
+
+    // 2. 风速
+    int target_speed = 0; // OFF
+
+    if (g_status.mode == MODE_MANUAL) {
+        // 保持当前设定 (由CMD_FAN直接修改)
+        target_speed = g_status.fan_speed_enum;
+    } else if (g_status.mode == MODE_NIGHT) {
+        target_speed = 1; // LOW
+    } else {
+        // AUTO
+        if (g_status.pm25_val <= 75) target_speed = 1;
+        else if (g_status.pm25_val <= 115) target_speed = 2;
+        else target_speed = 3;
+
+        if (g_status.tvoc_val > 500 && target_speed < 2) target_speed = 2;
+        if (g_status.eco2_val > 1000 && target_speed < 2) target_speed = 2;
+        if (g_status.pm25_val > 150 || g_status.tvoc_val > 2000) target_speed = 3;
+    }
+
+    // 执行
+    if (g_status.mode != MODE_MANUAL) { // 只有非手动模式下，算法才覆盖风速
+         if (target_speed != g_status.fan_speed_enum) {
+             g_status.fan_speed_enum = target_speed;
+             fan_set_speed(g_status.fan_speed_enum);
+             gui_set_fan(g_status.fan_speed_enum > 0);
+         }
+    }
+}
+
+
+/**
+ * @brief 控制中心线程函数
+ */
+static void control_thread_func(void *p1, void *p2, void *p3) {
+    ctrl_msg_t msg;
+    
+    // Init Defaults
+    gui_set_auto_mode(true);
+    
+    while(1) {
+        if (k_msgq_get(&control_msgq, &msg, K_FOREVER) == 0) {
+            switch(msg.type) {
+                case CTRL_EVT_PM25:
+                    g_status.pm25_val = msg.data.pm25;
+                    gui_set_pm25((uint16_t)(g_status.pm25_val * 10));  // 更新GUI，乘10显示
+                    break;
+                case CTRL_EVT_ENV:
+                    g_status.tvoc_val = msg.data.env.tvoc;
+                    g_status.hcho_val = msg.data.env.hcho;
+                    g_status.eco2_val = msg.data.env.eco2;
+                    gui_set_env(g_status.tvoc_val, g_status.hcho_val, g_status.eco2_val);
+                    break;
+                case CTRL_EVT_TH:
+                    g_status.temp_val = msg.data.th.temp;
+                    g_status.hum_val = msg.data.th.hum;
+                    gui_set_temp_hum((int16_t)g_status.temp_val, (uint16_t)g_status.hum_val);
+                    break;
+                case CTRL_EVT_CMD_MODE:
+                    if (strcmp(msg.data.mode_str, "auto") == 0) {
+                        g_status.mode = MODE_AUTO;
+                        gui_set_auto_mode(true);
+                    } else if (strcmp(msg.data.mode_str, "manual") == 0) {
+                        g_status.mode = MODE_MANUAL;
+                        gui_set_auto_mode(false);
+                    } else if (strcmp(msg.data.mode_str, "night") == 0) {
+                        g_status.mode = MODE_NIGHT;
+                        gui_set_auto_mode(false);
+                    }
+                    printk("[Ctrl] Mode: %d\n", g_status.mode);
+                    break;
+                case CTRL_EVT_CMD_FAN:
+                    if (g_status.mode == MODE_MANUAL) {
+                        g_status.fan_speed_enum = msg.data.fan_speed_enum;
+                        fan_set_speed(g_status.fan_speed_enum);
+                        gui_set_fan(g_status.fan_speed_enum > 0);
+                        printk("[Ctrl] Manual Fan: %d\n", g_status.fan_speed_enum);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            // Run logic after every event
+            update_system_logic();
+        }
+    }
+}
+
+K_THREAD_DEFINE(control_thread, 2048, control_thread_func, NULL, NULL, NULL, 5, 0, 0);
+
+// --- APIs ---
+void control_center_init(void) {
+    // Thread defined by K_THREAD_DEFINE, starts auto.
+}
+
+/**
+ * @brief 上报PM2.5数据
+ * @param val PM2.5 数值，单位 ug/m3
+ */
+void control_report_pm25(uint32_t val) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_PM25, .data.pm25 = val };
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+/**
+ * @brief 上报环境数据
+ * @param tvoc TVOC 数值，单位 ug/m3
+ * @param hcho 甲醛数值，单位 ug/m3
+ * @param eco2 eCO2 数值，单位 ppm
+ */
+void control_report_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_ENV, .data.env = {tvoc, hcho, eco2} };
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+/**
+ * @brief 上报温湿度数据
+ * @param temp 温度，单位 摄氏度
+ * @param hum 湿度，单位 百分比
+ */
+void control_report_temp_hum(float temp, float hum) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_TH, .data.th = {temp, hum} };
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+/**
+ * @brief 设置系统模式
+ * @param mode_str 模式字符串，"auto", "manual", "night"
+ */
+void control_set_mode(const char* mode_str) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_CMD_MODE };
+    strncpy(msg.data.mode_str, mode_str, sizeof(msg.data.mode_str)-1);
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+/**
+ * @brief 设置风扇速度命令
+ * @param speed_str 速度字符串，"off", "low", "medium", "high"
+ */
+void control_set_fan_cmd(const char* speed_str) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_CMD_FAN };
+    int lvl = 0;
+    if (strcmp(speed_str, "off") == 0) lvl = 0;
+    else if (strcmp(speed_str, "low") == 0) lvl = 1;
+    else if (strcmp(speed_str, "medium") == 0) lvl = 2;
+    else if (strcmp(speed_str, "high") == 0) lvl = 3;
+    msg.data.fan_speed_enum = lvl;
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+/**
+ * @brief 获取当前系统状态
+ * @param out_status 输出状态结构体指针
+ */
+void control_get_status(air_purifier_status_t *out_status) {
+    if (out_status) memcpy(out_status, &g_status, sizeof(air_purifier_status_t));
+}
