@@ -6,6 +6,7 @@
 
 #include "wifi_prov_app.h"
 #include "wifi_provisioning.h"
+#include "control_center.h"
 
 // 注册日志模块，名称为 "WIFI_PROV_APP"
 LOG_MODULE_REGISTER(WIFI_PROV_APP);
@@ -64,11 +65,13 @@ static void wifi_event_handler(struct net_mgmt_event_callback *cb, uint64_t mgmt
 		LOG_INF("已成功连接到路由器: %s", wifi_prov_get_ssid());
 		wifi_prov_on_sta_connected();
         wifi_prov_app_stop();
+		control_report_wifi_status(true); // 上报连接状态
 		k_sem_give(&wifi_connected_sem); // 释放连接成功信号量
 		break;
 	}
 	case NET_EVENT_WIFI_DISCONNECT_RESULT: {
 		LOG_INF("已从路由器断开: %s", wifi_prov_get_ssid());
+        control_report_wifi_status(false); // 上报断开状态
 		break;
 	}
 	case NET_EVENT_WIFI_AP_ENABLE_RESULT: {

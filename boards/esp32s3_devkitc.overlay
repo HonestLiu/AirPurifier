@@ -78,7 +78,7 @@
         };
 };
 
-/* 2. 修改 I2C0 控制器 */
+// OLED 显示屏 SSD1306
 &i2c0 {
     status = "okay";
     clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -102,6 +102,7 @@
     };
 };
 
+// AHT10 温湿度传感器
 &i2c1 {
     status = "okay";
     clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -118,8 +119,7 @@
     };
 };
 
-// IO17 = U1TXD
-// IO18 = U1RXD
+// DC01 -- PM 2.5 传感器
 &uart1 {
         status = "okay";
         current-speed = <9600>;
@@ -127,8 +127,7 @@
         pinctrl-names = "default";
 };
 
-// IO15 = U2TXD
-// IO16 = U2RXD
+// TOVC-301 -- TVOC 传感器
 &uart2 {
         status = "okay";
         current-speed = <9600>;
@@ -136,7 +135,7 @@
         pinctrl-names = "default";
 };
 
-/* 启用 LEDC 控制器并配置通道 */
+// 电机 PWM 输出配置
 &ledc0 {
     pinctrl-0 = <&ledc0_default>;
     pinctrl-names = "default";

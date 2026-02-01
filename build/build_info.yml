@@ -58,6 +58,6 @@ cmake:
     zephyr-base: '/home/hl/zephyrproject/zephyr'
 version: '0.1.0'
 west:
-  command: '/home/hl/zephyrproject/.venv/bin/west build -p always -b esp32s3_devkitc/esp32s3/procpu . -- -DDTC_OVERLAY_FILE=boards/esp32s3_devkitc.overlay'
+  command: '/home/hl/zephyrproject/.venv/bin/west build -p always -b esp32s3_devkitc/esp32s3/procpu -- -DDTC_OVERLAY_FILE=boards/esp32s3_devkitc.overlay'
   topdir: '/home/hl/zephyrproject'
   version: '1.5.0'

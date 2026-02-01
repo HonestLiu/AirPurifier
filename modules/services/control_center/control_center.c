@@ -9,6 +9,7 @@ typedef enum {
     CTRL_EVT_PM25,      // PM2.5 数据
     CTRL_EVT_ENV,       // TVOC, HCHO, eCO2 数据
     CTRL_EVT_TH,        // 温湿度数据
+    CTRL_EVT_WIFI,      // WiFi 状态
     CTRL_EVT_CMD_MODE,  // 设置模式命令
     CTRL_EVT_CMD_FAN    // 设置风速命令
 } ctrl_evt_type_t;
@@ -21,6 +22,7 @@ typedef struct {
         struct { float temp, hum; } th;                 // 温湿度数据
         int  fan_speed_enum;                            // 风速枚举
         char mode_str[16];                              // 模式字符串
+        bool wifi_connected;                            // WiFi 连接状态
     } data;
 } ctrl_msg_t;
 
@@ -29,6 +31,7 @@ K_MSGQ_DEFINE(control_msgq, sizeof(ctrl_msg_t), 20, 4);
 // 全局状态
 static air_purifier_status_t g_status = {
     .mode = MODE_AUTO,                                              // 默认自动模式
+    .wifi_connected = false,                                       // 默认未连接
     .fan_speed_enum = 0,                                            // 默认风速OFF
     .filter_life_hours = 0,                                         // 过滤器寿命
     .alert_high_pollution = false,                                  // 默认无警告
@@ -104,6 +107,10 @@ static void control_thread_func(void *p1, void *p2, void *p3) {
                     g_status.hum_val = msg.data.th.hum;
                     gui_set_temp_hum((int16_t)g_status.temp_val, (uint16_t)g_status.hum_val);
                     break;
+                case CTRL_EVT_WIFI:
+                    gui_set_wifi(msg.data.wifi_connected);
+                    g_status.wifi_connected = msg.data.wifi_connected;
+                    break;
                 case CTRL_EVT_CMD_MODE:
                     if (strcmp(msg.data.mode_str, "auto") == 0) {
                         g_status.mode = MODE_AUTO;
@@ -168,6 +175,15 @@ void control_report_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2) {
  */
 void control_report_temp_hum(float temp, float hum) {
     ctrl_msg_t msg = { .type = CTRL_EVT_TH, .data.th = {temp, hum} };
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+/**
+ * @brief 上报WiFi连接状态
+ * @param connected 是否已连接
+ */
+void control_report_wifi_status(bool connected) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_WIFI, .data.wifi_connected = connected ? 1 : 0 };
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 

@@ -27,6 +27,7 @@ typedef struct {
     // 警告标志
     bool alert_high_pollution;
     bool alert_replace_filter;
+    bool wifi_connected;
 } air_purifier_status_t;
 
 
@@ -39,6 +40,7 @@ void control_center_init(void);
 void control_report_pm25(uint32_t val);
 void control_report_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2);
 void control_report_temp_hum(float temp, float hum);
+void control_report_wifi_status(bool connected);
 
 // 下发控制指令
 void control_set_mode(const char* mode_str);

@@ -1,6 +1,6 @@
 #include "sensor_center.h"
 #include <zephyr/sys/printk.h>
-#include "../control_center/control_center.h"
+#include "control_center.h"
 
 // 消息队列定义
 K_MSGQ_DEFINE(sensor_hub_queue, sizeof(struct sensor_event), 20, 4);
