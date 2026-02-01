@@ -1075,6 +1075,7 @@ zephyr_udc0: &usb_otg {
         red-pwm-led = &red_pwm_led;
   green-pwm-led = &green_pwm_led;
   blue-pwm-led = &blue_pwm_led;
+        key = &button_1;
     };
 
     wifi_ap: wifi_ap {
@@ -1087,7 +1088,7 @@ zephyr_udc0: &usb_otg {
         pwm_output: pwm_output_node {
 
             pwms = <&ledc0 0 55556 (0 << 0)>;
-            label = "PWM_TEST_OUT";
+            label = "PWM_FAN";
         };
         red_pwm_led: red_pwm_led_node {
             pwms = <&ledc0 1 1000000 (0 << 0)>;
@@ -1101,6 +1102,22 @@ zephyr_udc0: &usb_otg {
             pwms = <&ledc0 3 1000000 (0 << 0)>;
             label = "BLUE_PWM_LED";
         };
+    };
+
+    custom-buttons {
+        button_1: custom_button_1 {
+            compatible = "custom,button";
+            pin = <&d0>;
+        };
+    };
+
+    buttons {
+            compatible = "gpio-keys";
+
+            d0: button_0 {
+                    gpios = <&gpio0 12 ((1 << 4) | (1 << 0))>;
+                    zephyr,code = <11>;
+            };
     };
 
  chosen {

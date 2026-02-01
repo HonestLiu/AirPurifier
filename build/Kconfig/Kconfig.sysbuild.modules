@@ -178,6 +178,9 @@ config ZEPHYR_ZCBOR_MODULE
 config ZEPHYR_AHT10_MODULE
    bool
    default y
+config ZEPHYR_BUTTON_MODULE
+   bool
+   default y
 config ZEPHYR_NRF_HW_MODELS_MODULE
    bool
    default y

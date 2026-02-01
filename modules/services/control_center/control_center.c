@@ -12,7 +12,8 @@ typedef enum {
     CTRL_EVT_TH,        // 温湿度数据
     CTRL_EVT_WIFI,      // WiFi 状态
     CTRL_EVT_CMD_MODE,  // 设置模式命令
-    CTRL_EVT_CMD_FAN    // 设置风速命令
+    CTRL_EVT_CMD_FAN,   // 设置风速命令
+    CTRL_EVT_FAN_POWER_TOGGLE // 风扇电源开关
 } ctrl_evt_type_t;
 
 typedef struct {
@@ -34,12 +35,39 @@ static air_purifier_status_t g_status = {
     .mode = MODE_AUTO,                                              // 默认自动模式
     .wifi_connected = false,                                       // 默认未连接
     .fan_speed_enum = 0,                                            // 默认风速OFF
+    .fan_power_enabled = true,
     .filter_life_hours = 0,                                         // 过滤器寿命
     .alert_high_pollution = false,                                  // 默认无警告
     .alert_replace_filter = false,                                  // 默认无警告
     .pm25_val = 0, .tvoc_val = 0, .hcho_val = 0, .eco2_val = 400,   // 默认环境值
     .temp_val = 25.0f, .hum_val = 50.0f
 };
+
+static fan_speed_t sanitize_speed(int speed_level) {
+    if (speed_level < FAN_SPEED_OFF) {
+        return FAN_SPEED_OFF;
+    }
+    if (speed_level > FAN_SPEED_HIGH) {
+        return FAN_SPEED_HIGH;
+    }
+    return (fan_speed_t)speed_level;
+}
+
+static fan_speed_t get_effective_speed(void) {
+    if (!g_status.fan_power_enabled) {
+        return FAN_SPEED_OFF;
+    }
+    return sanitize_speed(g_status.fan_speed_enum);
+}
+
+static bool fan_is_running(void) {
+    return get_effective_speed() != FAN_SPEED_OFF;
+}
+
+static void apply_fan_output(void) {
+    fan_set_speed(get_effective_speed());
+    gui_set_fan(fan_is_running());
+}
 
 // --- 核心逻辑 ---
 static void push_status_indicator_update(void) {
@@ -49,7 +77,7 @@ static void push_status_indicator_update(void) {
         .alert_replace_filter = g_status.alert_replace_filter,
         .manual_mode = (g_status.mode == MODE_MANUAL),
         .night_mode = (g_status.mode == MODE_NIGHT),
-        .fan_running = (g_status.fan_speed_enum > 0),
+        .fan_running = fan_is_running(),
     };
 
     status_indicator_sync(&inputs);
@@ -65,11 +93,10 @@ static void update_system_logic(void) {
     gui_set_warning(pollution_warning || filter_warning); // 异步发送到GUI
 
     // 2. 风速
-    int target_speed = 0; // OFF
+    int target_speed = g_status.fan_speed_enum;
 
     if (g_status.mode == MODE_MANUAL) {
         // 保持当前设定 (由CMD_FAN直接修改)
-        target_speed = g_status.fan_speed_enum;
     } else if (g_status.mode == MODE_NIGHT) {
         target_speed = 1; // LOW
     } else {
@@ -84,13 +111,11 @@ static void update_system_logic(void) {
     }
 
     // 执行
-    if (g_status.mode != MODE_MANUAL) { // 只有非手动模式下，算法才覆盖风速
-         if (target_speed != g_status.fan_speed_enum) {
-             g_status.fan_speed_enum = target_speed;
-             fan_set_speed(g_status.fan_speed_enum);
-             gui_set_fan(g_status.fan_speed_enum > 0);
-         }
+    if (g_status.mode != MODE_MANUAL && target_speed != g_status.fan_speed_enum) {
+        g_status.fan_speed_enum = target_speed;
     }
+
+    apply_fan_output();
     push_status_indicator_update();
 }
 
@@ -142,10 +167,12 @@ static void control_thread_func(void *p1, void *p2, void *p3) {
                 case CTRL_EVT_CMD_FAN:
                     if (g_status.mode == MODE_MANUAL) {
                         g_status.fan_speed_enum = msg.data.fan_speed_enum;
-                        fan_set_speed(g_status.fan_speed_enum);
-                        gui_set_fan(g_status.fan_speed_enum > 0);
                         printk("[Ctrl] Manual Fan: %d\n", g_status.fan_speed_enum);
                     }
+                    break;
+                case CTRL_EVT_FAN_POWER_TOGGLE:
+                    g_status.fan_power_enabled = !g_status.fan_power_enabled;
+                    printk("[Ctrl] Fan power toggled -> %s\n", g_status.fan_power_enabled ? "ON" : "OFF");
                     break;
                 default:
                     break;
@@ -224,6 +251,11 @@ void control_set_fan_cmd(const char* speed_str) {
     else if (strcmp(speed_str, "medium") == 0) lvl = 2;
     else if (strcmp(speed_str, "high") == 0) lvl = 3;
     msg.data.fan_speed_enum = lvl;
+    k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
+}
+
+void control_toggle_fan_power(void) {
+    ctrl_msg_t msg = { .type = CTRL_EVT_FAN_POWER_TOGGLE };
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 

@@ -11,18 +11,18 @@
     ]
   ],
   [
-    "CONFIG_DT_HAS_ESPRESSIF_ESP32_AES_ENABLED",
+    "CONFIG_DT_HAS_CUSTOM_BUTTON_ENABLED",
     "n",
     "bool",
     "y",
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2453
+      2208
     ]
   ],
   [
-    "CONFIG_DT_HAS_ESPRESSIF_ESP32_BT_HCI_ENABLED",
+    "CONFIG_DT_HAS_ESPRESSIF_ESP32_AES_ENABLED",
     "n",
     "bool",
     "y",
@@ -33,7 +33,7 @@
     ]
   ],
   [
-    "CONFIG_DT_HAS_ESPRESSIF_ESP32_CLOCK_ENABLED",
+    "CONFIG_DT_HAS_ESPRESSIF_ESP32_BT_HCI_ENABLED",
     "n",
     "bool",
     "y",
@@ -44,6 +44,17 @@
     ]
   ],
   [
+    "CONFIG_DT_HAS_ESPRESSIF_ESP32_CLOCK_ENABLED",
+    "n",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
+      2468
+    ]
+  ],
+  [
     "CONFIG_DT_HAS_ESPRESSIF_ESP32_FLASH_CONTROLLER_ENABLED",
     "n",
     "bool",
@@ -51,7 +62,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2483
+      2488
     ]
   ],
   [
@@ -62,7 +73,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2493
+      2498
     ]
   ],
   [
@@ -73,7 +84,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2498
+      2503
     ]
   ],
   [
@@ -84,7 +95,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2513
+      2518
     ]
   ],
   [
@@ -95,7 +106,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2523
+      2528
     ]
   ],
   [
@@ -106,7 +117,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2538
+      2543
     ]
   ],
   [
@@ -117,7 +128,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2568
+      2573
     ]
   ],
   [
@@ -128,7 +139,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2573
+      2578
     ]
   ],
   [
@@ -139,7 +150,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2583
+      2588
     ]
   ],
   [
@@ -150,7 +161,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2593
+      2598
     ]
   ],
   [
@@ -161,7 +172,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2598
+      2603
     ]
   ],
   [
@@ -172,7 +183,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2623
+      2628
     ]
   ],
   [
@@ -183,7 +194,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2633
+      2638
     ]
   ],
   [
@@ -194,7 +205,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2638
+      2643
     ]
   ],
   [
@@ -205,7 +216,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2648
+      2653
     ]
   ],
   [
@@ -216,7 +227,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2653
+      2658
     ]
   ],
   [
@@ -227,7 +238,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2678
+      2683
     ]
   ],
   [
@@ -238,7 +249,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2728
+      2733
     ]
   ],
   [
@@ -249,7 +260,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2998
+      3003
     ]
   ],
   [
@@ -260,7 +271,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      5443
+      5448
     ]
   ],
   [
@@ -271,7 +282,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      8858
+      8863
     ]
   ],
   [
@@ -282,7 +293,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      11438
+      11443
     ]
   ],
   [
@@ -293,7 +304,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      11473
+      11478
     ]
   ],
   [
@@ -304,7 +315,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      11478
+      11483
     ]
   ],
   [
@@ -315,7 +326,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      15148
+      15153
     ]
   ],
   [
@@ -326,7 +337,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      15258
+      15263
     ]
   ],
   [
@@ -2843,6 +2854,28 @@
     ]
   ],
   [
+    "CONFIG_CUSTOM_BUTTON",
+    "y",
+    "bool",
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      96
+    ]
+  ],
+  [
+    "CONFIG_ZEPHYR_BUTTON_MODULE",
+    "n",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.modules",
+      349
+    ]
+  ],
+  [
     "CONFIG_ZEPHYR_NRF_HW_MODELS_MODULE",
     "n",
     "bool",
@@ -2850,7 +2883,7 @@
     "default",
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.modules",
-      347
+      353
     ]
   ],
   [

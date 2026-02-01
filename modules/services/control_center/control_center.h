@@ -22,6 +22,7 @@ typedef struct {
     // 系统状态
     system_mode_t mode;
     int           fan_speed_enum; // 0=OFF, 1=LOW, 2=MED, 3=HIGH
+    bool          fan_power_enabled; // 用户开关，false 时强制关闭风扇
     uint32_t      filter_life_hours; 
     
     // 警告标志
@@ -45,6 +46,7 @@ void control_report_wifi_status(bool connected);
 // 下发控制指令
 void control_set_mode(const char* mode_str);
 void control_set_fan_cmd(const char* speed_str);
+void control_toggle_fan_power(void);
 
 // 获取状态
 void control_get_status(air_purifier_status_t *out_status);

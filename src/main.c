@@ -20,6 +20,7 @@
 #include "aht10_app.h"
 #include "fan.h"
 #include "status_indicator.h"
+#include "button_app.h"
 
 
 // U8G2 GUI
@@ -87,6 +88,9 @@ int main(void)
 
     // 9. 启动状态指示灯服务
     status_indicator_init();
+
+    // 10. 启动按钮服务
+    button_app_start();
 
     while (1)
     {

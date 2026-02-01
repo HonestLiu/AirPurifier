@@ -907,6 +907,25 @@ rule C_STATIC_LIBRARY_LINKER__.2e.2e__workspace__airPurifier__modules__aht10__dr
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__.2e.2e__workspace__airPurifier__modules__button__drivers__button_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}/home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__.2e.2e__workspace__airPurifier__modules__button__drivers__button_
+  command = $PRE_LINK && ccache /opt/st/stm32cubeclt_1.20.0/CMake/bin/cmake -E rm -f $TARGET_FILE && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && ccache /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__kernel_unscanned_
   depfile = $DEP_FILE
   deps = gcc

@@ -35,6 +35,9 @@
 /home/hl/zephyrproject/workspace/airPurifier/modules/aht10/Kconfig
 /home/hl/zephyrproject/workspace/airPurifier/modules/aht10/drivers/Kconfig
 /home/hl/zephyrproject/workspace/airPurifier/modules/aht10/drivers/aht10/Kconfig
+/home/hl/zephyrproject/workspace/airPurifier/modules/button/Kconfig
+/home/hl/zephyrproject/workspace/airPurifier/modules/button/drivers/Kconfig
+/home/hl/zephyrproject/workspace/airPurifier/modules/button/drivers/button/Kconfig
 /home/hl/zephyrproject/zephyr/Kconfig
 /home/hl/zephyrproject/zephyr/Kconfig.constants
 /home/hl/zephyrproject/zephyr/Kconfig.zephyr

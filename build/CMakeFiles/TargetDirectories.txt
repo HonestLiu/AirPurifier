@@ -517,6 +517,13 @@
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/aht10/drivers/aht10/CMakeFiles/..__workspace__airPurifier__modules__aht10__drivers__aht10.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/aht10/drivers/aht10/CMakeFiles/edit_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/aht10/drivers/aht10/CMakeFiles/rebuild_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/CMakeFiles/edit_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/CMakeFiles/rebuild_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/drivers/CMakeFiles/edit_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/drivers/CMakeFiles/rebuild_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/drivers/button/CMakeFiles/..__workspace__airPurifier__modules__button__drivers__button.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/drivers/button/CMakeFiles/edit_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/button/drivers/button/CMakeFiles/rebuild_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/nrf_hw_models/CMakeFiles/edit_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/modules/nrf_hw_models/CMakeFiles/rebuild_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/kernel/CMakeFiles/kernel.dir

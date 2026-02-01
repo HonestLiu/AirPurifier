@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 
 list(APPEND ZEPHYR_EXTRA_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/../modules/aht10)
+list(APPEND ZEPHYR_EXTRA_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/../modules/button)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(u8g2_zephyr_app)
@@ -43,6 +44,9 @@ set(CONTROL_CENTER ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/control_center)
 # 状态指示服务
 set(STATUS_INDICATOR ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/status_indicator)
 
+# 按钮服务
+set(BUTTON_APP ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/button_app)
+
 # 头文件搜索路径
 target_include_directories(app PRIVATE 
     ${U8G2_CSRC} 
@@ -58,6 +62,7 @@ target_include_directories(app PRIVATE
     ${CONTROL_CENTER}
     ${STATUS_INDICATOR}
     ${RGB_PWM_LED_DRIVER}
+    ${BUTTON_APP}
 )
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
@@ -139,4 +144,7 @@ target_sources(app PRIVATE
 
     # --- RGB PWM LED 驱动 ---
     ${RGB_PWM_LED_DRIVER}/rgb_led.c
+
+    # --- 按钮服务 ---
+    ${BUTTON_APP}/button_app.c
 )

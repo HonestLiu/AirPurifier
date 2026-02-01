@@ -12,6 +12,7 @@
         red-pwm-led = &red_pwm_led;
 		green-pwm-led = &green_pwm_led;
 		blue-pwm-led = &blue_pwm_led;
+        key = &button_1;
     };
 
     wifi_ap: wifi_ap {
@@ -38,6 +39,22 @@
             pwms = <&ledc0 3 1000000 PWM_POLARITY_NORMAL>;
             label = "BLUE_PWM_LED";
         };
+    };
+
+    custom-buttons {
+        button_1: custom_button_1 {
+            compatible = "custom,button";
+            pin = <&d0>;
+        };
+    };
+
+    buttons {
+            compatible = "gpio-keys";
+
+            d0: button_0 {
+                    gpios = <&gpio0 12 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+                    zephyr,code = <INPUT_KEY_0>;
+            };
     };
 
 	chosen {
@@ -187,5 +204,3 @@
     };
 };
 
-/* 配置引脚复用 (Pinmux) */
-/* &pinctrl 节点已在上方统一定义，此处移除冗余配置以防冲突 */

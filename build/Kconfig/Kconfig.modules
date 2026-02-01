@@ -342,6 +342,12 @@ config ZEPHYR_AHT10_MODULE
 	bool
 	default y
 endmenu
+menu "button (/home/hl/zephyrproject/workspace/airPurifier/airPurifier/../modules/button)"
+osource "/home/hl/zephyrproject/workspace/airPurifier/modules/button/Kconfig"
+config ZEPHYR_BUTTON_MODULE
+	bool
+	default y
+endmenu
 config ZEPHYR_NRF_HW_MODELS_MODULE
 	bool
 	default y
