@@ -173,6 +173,11 @@ extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_net_if_ipv4_set_netm
 extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_net_if_ipv6_addr_add_by_index;
 extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_net_if_ipv6_addr_lookup_by_index;
 extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_net_if_ipv6_addr_rm_by_index;
+extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_pwm_capture_cycles;
+extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_pwm_disable_capture;
+extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_pwm_enable_capture;
+extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_pwm_get_cycles_per_sec;
+extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_pwm_set_cycles;
 extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_sensor_attr_get;
 extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_sensor_attr_set;
 extern __weak ALIAS_OF(no_syscall_impl) void * const z_impl_sensor_channel_get;

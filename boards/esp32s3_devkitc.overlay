@@ -1,5 +1,6 @@
 #include <zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h>
 #include <dt-bindings/pinctrl/esp32s3-pinctrl.h>
+#include <zephyr/dt-bindings/pwm/pwm.h>
 // SDA GPIO1 ; SCL GPIO2
 / {
     aliases {
@@ -7,12 +8,22 @@
         dc-01 = &uart1;
         tovc-301 = &uart2;
         aosong-aht10 = &aht10_i2c1;
+        fan-pwm = &pwm_output;
     };
 
     wifi_ap: wifi_ap {
 		compatible = "espressif,esp32-wifi";
 		status = "okay";
 	};
+
+    pwmleds {
+        compatible = "pwm-leds";
+        pwm_output: pwm_output_node {
+            /* 使用 ledc0 的通道 0, 周期 55556ns, 标志位 PWM_POLARITY_NORMAL */
+            pwms = <&ledc0 0 55556 PWM_POLARITY_NORMAL>;
+            label = "PWM_TEST_OUT";
+        };
+    };
 
 	chosen {
 		zephyr,storage-partition = &storage_partition;
@@ -122,4 +133,30 @@
         current-speed = <9600>;
         pinctrl-0 = <&uart2_default>;
         pinctrl-names = "default";
+};
+
+/* 启用 LEDC 控制器并配置通道 */
+&ledc0 {
+    pinctrl-0 = <&ledc0_default>;
+    pinctrl-names = "default";
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    /* 配置通道 0 */
+    channel0@0 {
+        reg = <0x0>;
+        timer = <0>;
+    };
+};
+
+/* 配置引脚复用 (Pinmux) */
+&pinctrl {
+    ledc0_default: ledc0_default {
+        group1 {
+            /* 将 LEDC 通道 0 映射到 GPIO 13 */
+            pinmux = <LEDC_CH0_GPIO13>;
+            output-enable;
+        };
+    };
 };

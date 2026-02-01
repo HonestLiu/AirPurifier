@@ -29,4 +29,5 @@ empty_file.o: /home/hl/zephyrproject/zephyr/misc/empty_file.c \
  /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h \
  /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-gpio-sigmap.h \
  boards/esp32s3_devkitc.overlay \
- /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-pinctrl.h
+ /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-pinctrl.h \
+ /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pwm/pwm.h

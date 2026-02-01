@@ -14,6 +14,8 @@
 
 #define K_SYSCALL_DRIVER_I2C_TARGET(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, i2c_target, I2C_TARGET)
 
+#define K_SYSCALL_DRIVER_PWM(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, pwm, PWM)
+
 #define K_SYSCALL_DRIVER_SENSOR(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, sensor, SENSOR)
 
 #define K_SYSCALL_DRIVER_SHARED_IRQ(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, shared_irq, SHARED_IRQ)
@@ -107,8 +109,6 @@
 #define K_SYSCALL_DRIVER_PS2(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, ps2, PS2)
 
 #define K_SYSCALL_DRIVER_PTP_CLOCK(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, ptp_clock, PTP_CLOCK)
-
-#define K_SYSCALL_DRIVER_PWM(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, pwm, PWM)
 
 #define K_SYSCALL_DRIVER_REGULATOR_PARENT(ptr, op) K_SYSCALL_DRIVER_GEN(ptr, op, regulator_parent, REGULATOR_PARENT)
 

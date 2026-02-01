@@ -267,6 +267,9 @@
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/pinctrl/CMakeFiles/rebuild_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/pinctrl/renesas/CMakeFiles/edit_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/pinctrl/renesas/CMakeFiles/rebuild_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/pwm/CMakeFiles/drivers__pwm.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/pwm/CMakeFiles/edit_cache.dir
+/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/pwm/CMakeFiles/rebuild_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/sensor/CMakeFiles/drivers__sensor.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/sensor/CMakeFiles/edit_cache.dir
 /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/zephyr/drivers/sensor/CMakeFiles/rebuild_cache.dir

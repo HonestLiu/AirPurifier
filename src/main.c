@@ -10,6 +10,7 @@
 #include "dc01_app.h"
 #include "tovc_301.h"
 #include "aht10_app.h"
+#include "fan.h"
 
 
 // U8G2 GUI
@@ -71,6 +72,9 @@ int main(void)
 
     // 7. 启动 AHT10 传感器应用
     aht10_app_start();
+
+    // 8. 启动风扇控制应用
+    fan_app_start();
 
     while (1)
     {

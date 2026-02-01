@@ -1062,6 +1062,8 @@ zephyr_udc0: &usb_otg {
 
 # 1 "/home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-pinctrl.h" 1 3 4
 # 3 "./boards/esp32s3_devkitc.overlay" 2
+# 1 "/home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pwm/pwm.h" 1 3 4
+# 4 "./boards/esp32s3_devkitc.overlay" 2
 
 / {
     aliases {
@@ -1069,12 +1071,22 @@ zephyr_udc0: &usb_otg {
         dc-01 = &uart1;
         tovc-301 = &uart2;
         aosong-aht10 = &aht10_i2c1;
+        fan-pwm = &pwm_output;
     };
 
     wifi_ap: wifi_ap {
   compatible = "espressif,esp32-wifi";
   status = "okay";
  };
+
+    pwmleds {
+        compatible = "pwm-leds";
+        pwm_output: pwm_output_node {
+
+            pwms = <&ledc0 0 55556 (0 << 0)>;
+            label = "PWM_TEST_OUT";
+        };
+    };
 
  chosen {
   zephyr,storage-partition = &storage_partition;
@@ -1184,6 +1196,32 @@ zephyr_udc0: &usb_otg {
         current-speed = <9600>;
         pinctrl-0 = <&uart2_default>;
         pinctrl-names = "default";
+};
+
+
+&ledc0 {
+    pinctrl-0 = <&ledc0_default>;
+    pinctrl-names = "default";
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+
+    channel0@0 {
+        reg = <0x0>;
+        timer = <0>;
+    };
+};
+
+
+&pinctrl {
+    ledc0_default: ledc0_default {
+        group1 {
+
+            pinmux = <(((13 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((73 & 0x1FFU) << 15U))>;
+            output-enable;
+        };
+    };
 };
 # 0 "<command-line>" 2
 # 1 "/home/hl/zephyrproject/zephyr/misc/empty_file.c"

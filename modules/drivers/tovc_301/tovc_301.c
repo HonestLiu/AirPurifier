@@ -1,7 +1,12 @@
 #include "tovc_301.h"
 
 #define TOVC_301_NODE DT_ALIAS(tovc_301)
+#if DT_NODE_EXISTS(TOVC_301_NODE)
 static const struct device *const tovc_dev = DEVICE_DT_GET(TOVC_301_NODE);
+#else
+#error "TOVC-301 device not found in DTS"
+#endif
+
 
 #define TVOC_FRAME_SIZE 9
 

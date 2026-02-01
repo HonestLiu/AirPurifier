@@ -99,6 +99,17 @@
     ]
   ],
   [
+    "CONFIG_DT_HAS_ESPRESSIF_ESP32_LEDC_ENABLED",
+    "n",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
+      2538
+    ]
+  ],
+  [
     "CONFIG_DT_HAS_ESPRESSIF_ESP32_PINCTRL_ENABLED",
     "n",
     "bool",
@@ -250,6 +261,17 @@
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
       5443
+    ]
+  ],
+  [
+    "CONFIG_DT_HAS_PWM_LEDS_ENABLED",
+    "n",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
+      8858
     ]
   ],
   [
@@ -6828,9 +6850,123 @@
     "CONFIG_PWM",
     "y",
     "bool",
+    "y",
+    "assign",
+    [
+      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/prj.conf",
+      93
+    ]
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL_OFF",
+    "y",
+    "bool",
     null,
     "unset",
     null
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL_ERR",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL_WRN",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL_INF",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL_DBG",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL_DEFAULT",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      5
+    ]
+  ],
+  [
+    "CONFIG_PWM_LOG_LEVEL",
+    "n",
+    "int",
+    "3",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/subsys/logging/Kconfig.template.log_config",
+      36
+    ]
+  ],
+  [
+    "CONFIG_PWM_INIT_PRIORITY",
+    "y",
+    "int",
+    "50",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/drivers/pwm/Kconfig",
+      19
+    ]
+  ],
+  [
+    "CONFIG_PWM_CAPTURE",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PWM_EVENT",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
+    "CONFIG_PWM_LED_ESP32",
+    "y",
+    "bool",
+    "y",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/drivers/pwm/Kconfig.esp32",
+      9
+    ]
+  ],
+  [
+    "CONFIG_PWM_TC_INIT_PRIORITY",
+    "y",
+    "int",
+    "50",
+    "default",
+    [
+      "/home/hl/zephyrproject/zephyr/drivers/pwm/Kconfig.sam0_tc",
+      15
+    ]
   ],
   [
     "CONFIG_RETAINED_MEM",

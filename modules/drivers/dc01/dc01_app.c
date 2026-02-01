@@ -5,9 +5,15 @@
 #include <zephyr/sys/printk.h>
 #include "dc01_app.h"
 
-/* 获取设备树别名定义的串口 */
+
 #define DC01_NODE DT_ALIAS(dc_01)
+
+#if DT_NODE_EXISTS(DC01_NODE)
 static const struct device *const dc01_dev = DEVICE_DT_GET(DC01_NODE);
+#else
+#error "DC01 device not found in DTS"
+#endif
+
 
 #define D01_FRAME_SIZE 4
 
