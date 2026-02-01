@@ -1068,6 +1068,7 @@ zephyr_udc0: &usb_otg {
         oled-display = &ssd1306_node;
         dc-01 = &uart1;
         tovc-301 = &uart2;
+        aosong-aht10 = &aht10_i2c1;
     };
 
     wifi_ap: wifi_ap {
@@ -1092,6 +1093,28 @@ zephyr_udc0: &usb_otg {
             output-high;
         };
     };
+
+    i2c1_default: i2c1_default {
+        group1 {
+            pinmux = <(((4 & 0x3FU) << 0U) | ((92 & 0x1FFU) << 6U) | ((92 & 0x1FFU) << 15U))>,
+                     <(((5 & 0x3FU) << 0U) | ((91 & 0x1FFU) << 6U) | ((91 & 0x1FFU) << 15U))>;
+            bias-pull-up;
+            drive-open-drain;
+            output-high;
+        };
+    };
+
+    uart1_default: uart1_default {
+        group1 {
+            pinmux = <(((17 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((15 & 0x1FFU) << 15U))>;
+            output-high;
+        };
+        group2 {
+            pinmux = <(((18 & 0x3FU) << 0U) | ((15 & 0x1FFU) << 6U) | ((0x1FFU & 0x1FFU) << 15U))>;
+            bias-pull-up;
+        };
+    };
+
 
     uart2_default: uart2_default {
                 group1 {
@@ -1126,6 +1149,22 @@ zephyr_udc0: &usb_otg {
         segment-remap;
         com-invdir;
         prechargep = <0x22>;
+    };
+};
+
+&i2c1 {
+    status = "okay";
+    clock-frequency = <100000>;
+
+    pinctrl-0 = <&i2c1_default>;
+    pinctrl-names = "default";
+
+
+    aht10_i2c1: aht10@38 {
+        compatible = "aosong,aht10";
+        reg = <0x38>;
+        status = "okay";
+
     };
 };
 

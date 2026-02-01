@@ -6,6 +6,7 @@
         oled-display = &ssd1306_node;
         dc-01 = &uart1;
         tovc-301 = &uart2;
+        aosong-aht10 = &aht10_i2c1;
     };
 
     wifi_ap: wifi_ap {
@@ -30,6 +31,28 @@
             output-high;
         };
     };
+
+    i2c1_default: i2c1_default {
+        group1 {
+            pinmux = <I2C1_SDA_GPIO4>,
+                     <I2C1_SCL_GPIO5>;
+            bias-pull-up;
+            drive-open-drain;
+            output-high;
+        };
+    };
+
+    uart1_default: uart1_default {
+        group1 {
+            pinmux = <UART1_TX_GPIO17>;
+            output-high;
+        };
+        group2 {
+            pinmux = <UART1_RX_GPIO18>;
+            bias-pull-up;
+        };
+    };
+
     // Uart2的引脚随便配置，后续根据实际随意修改即可
     uart2_default: uart2_default {
                 group1 {
@@ -50,7 +73,7 @@
     clock-frequency = <I2C_BITRATE_STANDARD>;
     /* 注意这里一定要有 & 符号！ */
     pinctrl-0 = <&i2c0_default>;
-    pinctrl-names = "default";
+    pinctrl-names = "default"; // SDA : GPIO1 ; SCL : GPIO2
 
     ssd1306_node: ssd1306@3c {
         compatible = "solomon,ssd1306fb";
@@ -64,6 +87,22 @@
         segment-remap;
         com-invdir;
         prechargep = <0x22>;
+    };
+};
+
+&i2c1 {
+    status = "okay";
+    clock-frequency = <I2C_BITRATE_STANDARD>;
+    /* 注意这里一定要有 & 符号！ */
+    pinctrl-0 = <&i2c1_default>; // SDA : GPIO4 ; SCL : GPIO5
+    pinctrl-names = "default";
+
+    // 节点名必须为 aht10@38
+    aht10_i2c1: aht10@38 {    
+        compatible = "aosong,aht10";
+        reg = <0x38>;          // AHT10 固定地址
+        status = "okay";
+        // label = "AHT10_I2C1"; // 可选：用于驱动识别
     };
 };
 

@@ -62,9 +62,13 @@ void tovc_sensor_thread_entry(void *p1, void *p2, void *p3)
             struct sensor_event ev = {
                 .type = SENSOR_TOVC_301,
                 .timestamp = k_uptime_get(),
-                .data.tvoc = sensor_data.tvoc,
-                .data.hcho = sensor_data.hcho,
-                .data.eco2 = sensor_data.eco2,
+                .data = {
+                    .tovc = {
+                        .tvoc = sensor_data.tvoc,
+                        .hcho = sensor_data.hcho,
+                        .eco2 = sensor_data.eco2,
+                    }
+                }
             }; 
             sensor_hub_send(&ev, K_NO_WAIT);
             #else

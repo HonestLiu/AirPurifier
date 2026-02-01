@@ -89,7 +89,11 @@ void dc01_sensor_thread_entry(void *p1, void *p2, void *p3)
         struct sensor_event ev = {
             .type = SENSOR_DC01_PM25,
             .timestamp = k_uptime_get(),
-            .data.pm25_raw_x10 = total_x10, // [此处以十倍精度发送到传感器中心，后续使用时再除以10]
+            .data = {
+                .dc01 = {
+                    .pm25_raw_x10 = total_x10, // [此处以十倍精度发送到传感器中心，后续使用时再除以10]
+                }
+            }
         };
 
         sensor_hub_send(&ev, K_NO_WAIT);

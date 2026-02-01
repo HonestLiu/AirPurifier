@@ -9,7 +9,7 @@ events:
       - "/home/hl/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
-      - "CMakeLists.txt:3 (find_package)"
+      - "CMakeLists.txt:5 (find_package)"
     message: |
       The target system is: Generic - 4.3.99 - xtensa
       The host system is: Linux - 6.14.0-37-generic - x86_64
@@ -23,7 +23,7 @@ events:
       - "/home/hl/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
-      - "CMakeLists.txt:3 (find_package)"
+      - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
       Compiler: /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc 
@@ -48,7 +48,7 @@ events:
       - "/home/hl/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
-      - "CMakeLists.txt:3 (find_package)"
+      - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
       Compiler: /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gcc 
@@ -74,7 +74,7 @@ events:
       - "/home/hl/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
-      - "CMakeLists.txt:3 (find_package)"
+      - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
       Compiler: /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-g++ 
@@ -99,7 +99,7 @@ events:
       - "/home/hl/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
-      - "CMakeLists.txt:3 (find_package)"
+      - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
       Compiler: /home/hl/zephyr-sdk-0.17.4/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-g++ 
@@ -124,7 +124,7 @@ events:
       - "/home/hl/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:138 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
       - "/home/hl/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
-      - "CMakeLists.txt:3 (find_package)"
+      - "CMakeLists.txt:5 (find_package)"
     message: |
       Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
       xtensa-espressif_esp32s3_zephyr-elf-gcc (Zephyr SDK 0.17.4) 12.2.0

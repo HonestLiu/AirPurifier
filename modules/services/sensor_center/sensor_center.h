@@ -8,13 +8,27 @@ struct sensor_event {
     enum { 
         SENSOR_DC01_PM25,
         SENSOR_TOVC_301,
+        SENSOR_AHT10,
     } type;
     int64_t timestamp;
     union {
-        uint32_t pm25_raw_x10; // PM2.5 原始值，放大10倍以支持小数
-        uint16_t tvoc; // ug/m3
-        uint16_t hcho; // ug/m3
-        uint16_t eco2; // ppm
+        // DC01 PM2.5 传感器数据
+        struct {
+            uint32_t pm25_raw_x10; // PM2.5 原始值，放大10倍以支持小数
+        } dc01;
+
+        // TOVC-301 传感器数据
+        struct {
+            uint16_t tvoc; // ug/m3
+            uint16_t hcho; // ug/m3
+            uint16_t eco2; // ppm
+        } tovc;
+        
+        // AHT10 传感器数据
+        struct {
+            int32_t temp_x1000; // 温度值，放大1000倍以支持小数
+            int32_t hum_x1000;  // 湿度值
+        } aht10;
     } data;
 };
 

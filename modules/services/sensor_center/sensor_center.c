@@ -34,6 +34,21 @@ void tovc_data_process(uint16_t tvoc, uint16_t hcho, uint16_t eco2) {
     // 这里可以添加更多处理逻辑，比如数据存储、上报等
 }
 
+void aht10_data_process(int32_t temp_x1000, int32_t hum_x1000) {
+
+    // 处理负数（Zephyr 的 sensor_value 支持负值）
+    printk("[AHT10] Temperature: ");
+    if (temp_x1000 < 0) {
+        printk("-%u.%03u", (-temp_x1000)/1000, (-temp_x1000)%1000);
+    } else {
+        printk("%u.%03u", temp_x1000/1000, temp_x1000%1000);
+    }
+
+    // 湿度不存在负数，正常处理
+    printk(" | Humidity: %u.%03u %%\n", hum_x1000/1000, hum_x1000%1000);
+    // 这里可以添加更多处理逻辑，比如数据存储、上报等
+}
+
 /**
  * @brief 传感器中心处理线程入口
  * */
@@ -45,10 +60,13 @@ void sensor_hub_thread(void *p1, void *p2, void *p3)
             // 分发逻辑...
             switch (ev.type) {
                 case SENSOR_DC01_PM25:
-                    dc01_data_process(ev.data.pm25_raw_x10 / 10); // 传入原始值除以10后的结果
+                    dc01_data_process(ev.data.dc01.pm25_raw_x10 / 10); // 传入原始值除以10后的结果
                     break;
                 case SENSOR_TOVC_301:
-                    tovc_data_process(ev.data.tvoc, ev.data.hcho, ev.data.eco2);
+                    tovc_data_process(ev.data.tovc.tvoc, ev.data.tovc.hcho, ev.data.tovc.eco2);
+                    break;
+                case SENSOR_AHT10:
+                    aht10_data_process(ev.data.aht10.temp_x1000, ev.data.aht10.hum_x1000);
                     break;
                 default:
                     printk("Unknown sensor event type: %d\n", ev.type);

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 
+list(APPEND ZEPHYR_EXTRA_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/../modules/aht10)
+
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(u8g2_zephyr_app)
 
@@ -26,6 +28,9 @@ set(DC01_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/dc01)
 # TOVC-301 传感器驱动
 set(TOVC_301_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/tovc_301)
 
+# AHT10 传感器 APP
+set(AHT10_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/aht10_app)
+
 # 头文件搜索路径
 target_include_directories(app PRIVATE 
     ${U8G2_CSRC} 
@@ -36,6 +41,7 @@ target_include_directories(app PRIVATE
     ${SENSOR_CENTER}
     ${DC01_DRIVER}
     ${TOVC_301_DRIVER}
+    ${AHT10_DRIVER}
 )
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
@@ -102,4 +108,7 @@ target_sources(app PRIVATE
 
     # --- TOVC-301 传感器驱动 ---
     ${TOVC_301_DRIVER}/tovc_301.c
+
+    # --- AHT10 传感器 APP ---
+    ${AHT10_DRIVER}/aht10_app.c
 )

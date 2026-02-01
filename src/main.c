@@ -9,6 +9,7 @@
 #include "sensor_center.h"
 #include "dc01_app.h"
 #include "tovc_301.h"
+#include "aht10_app.h"
 
 
 // U8G2 GUI
@@ -67,6 +68,9 @@ int main(void)
 
     // 6. 启动 TOVC-301 传感器应用
     tovc_sensor_app_start();
+
+    // 7. 启动 AHT10 传感器应用
+    aht10_app_start();
 
     while (1)
     {

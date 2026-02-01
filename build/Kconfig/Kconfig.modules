@@ -336,6 +336,12 @@ config ZEPHYR_ZCBOR_MODULE
 	bool
 	default y
 endmenu
+menu "aht10 (/home/hl/zephyrproject/workspace/airPurifier/airPurifier/../modules/aht10)"
+osource "/home/hl/zephyrproject/workspace/airPurifier/modules/aht10/Kconfig"
+config ZEPHYR_AHT10_MODULE
+	bool
+	default y
+endmenu
 config ZEPHYR_NRF_HW_MODELS_MODULE
 	bool
 	default y

@@ -57,4 +57,5 @@
 "trusted-firmware-m":"/home/hl/zephyrproject/modules/tee/tf-m/trusted-firmware-m":"${ZEPHYR_TRUSTED_FIRMWARE_M_CMAKE_DIR}"
 "uoscore-uedhoc":"/home/hl/zephyrproject/modules/lib/uoscore-uedhoc":"${ZEPHYR_UOSCORE_UEDHOC_CMAKE_DIR}"
 "zcbor":"/home/hl/zephyrproject/modules/lib/zcbor":"${ZEPHYR_ZCBOR_CMAKE_DIR}"
+"aht10":"/home/hl/zephyrproject/workspace/airPurifier/airPurifier/../modules/aht10":"/home/hl/zephyrproject/workspace/airPurifier/modules/aht10"
 "nrf_hw_models":"/home/hl/zephyrproject/modules/bsim_hw_models/nrf_hw_models":"/home/hl/zephyrproject/modules/bsim_hw_models/nrf_hw_models"

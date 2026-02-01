@@ -1,6 +1,0 @@
-config AHT10
-    bool "Aosong AHT10/AHT20 temperature and humidity sensor"
-    default n
-    depends on I2C
-    help
-      Enable driver for Aosong AHT10/AHT20 sensors.

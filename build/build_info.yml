@@ -10,6 +10,7 @@ cmake:
     revision: ''
   devicetree:
     bindings-dirs:
+     - '/home/hl/zephyrproject/workspace/airPurifier/modules/aht10/dts/bindings'
      - '/home/hl/zephyrproject/zephyr/dts/bindings'
     files:
      - '/home/hl/zephyrproject/zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts'
@@ -26,6 +27,7 @@ cmake:
      - '/home/hl/zephyrproject/modules/hal/nxp/dts'
      - '/home/hl/zephyrproject/modules/hal/stm32/dts'
      - '/home/hl/zephyrproject/modules/hal/ti/dts'
+     - '/home/hl/zephyrproject/workspace/airPurifier/modules/aht10/dts'
      - '/home/hl/zephyrproject/zephyr/include'
      - '/home/hl/zephyrproject/zephyr/include/zephyr'
      - '/home/hl/zephyrproject/zephyr/dts/common'

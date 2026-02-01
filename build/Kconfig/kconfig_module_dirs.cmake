@@ -58,4 +58,5 @@ list(APPEND kconfig_env_dirs ZEPHYR_TRUSTED_FIRMWARE_A_MODULE_DIR=/home/hl/zephy
 list(APPEND kconfig_env_dirs ZEPHYR_TRUSTED_FIRMWARE_M_MODULE_DIR=/home/hl/zephyrproject/modules/tee/tf-m/trusted-firmware-m)
 list(APPEND kconfig_env_dirs ZEPHYR_UOSCORE_UEDHOC_MODULE_DIR=/home/hl/zephyrproject/modules/lib/uoscore-uedhoc)
 list(APPEND kconfig_env_dirs ZEPHYR_ZCBOR_MODULE_DIR=/home/hl/zephyrproject/modules/lib/zcbor)
+list(APPEND kconfig_env_dirs ZEPHYR_AHT10_MODULE_DIR=/home/hl/zephyrproject/workspace/airPurifier/airPurifier/../modules/aht10)
 list(APPEND kconfig_env_dirs ZEPHYR_NRF_HW_MODELS_MODULE_DIR=/home/hl/zephyrproject/modules/bsim_hw_models/nrf_hw_models)
