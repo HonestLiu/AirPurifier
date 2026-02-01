@@ -17,8 +17,22 @@ set(ZEPHYR_WIFI_PROV ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/wifi_prov)
 # MQTT相关
 set(ZEPHYR_MQTT ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/mqtt)
 
+# 传感器中心
+set(SENSOR_CENTER ${CMAKE_CURRENT_SOURCE_DIR}/modules/services/sensor_center)
+
+# DC01 传感器驱动
+set(DC01_DRIVER ${CMAKE_CURRENT_SOURCE_DIR}/modules/drivers/dc01)
+
 # 头文件搜索路径
-target_include_directories(app PRIVATE ${U8G2_CSRC} ${GUI} ${ZEPHYR_U8G2} ${ZEPHYR_WIFI_PROV} ${ZEPHYR_MQTT})
+target_include_directories(app PRIVATE 
+    ${U8G2_CSRC} 
+    ${GUI} 
+    ${ZEPHYR_U8G2} 
+    ${ZEPHYR_WIFI_PROV} 
+    ${ZEPHYR_MQTT} 
+    ${DC01_DRIVER}
+    ${SENSOR_CENTER}
+)
 
 # 移除这里的 U8G2_16BIT 宏定义，因为源码 u8g2.h 已经定义了，避免报 Redefined 警告
 target_compile_definitions(app PRIVATE
@@ -75,4 +89,10 @@ target_sources(app PRIVATE
     # --- MQTT 相关 ---
     ${ZEPHYR_MQTT}/app_mqtt.c
     ${ZEPHYR_MQTT}/mqtt_backend.c
+
+    # --- 传感器中心 ---
+    ${SENSOR_CENTER}/sensor_center.c
+
+    # --- DC01 传感器驱动 ---
+    ${DC01_DRIVER}/dc01_app.c
 )

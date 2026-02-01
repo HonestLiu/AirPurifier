@@ -4,6 +4,8 @@
 / {
     aliases {
         oled-display = &ssd1306_node;
+        dc-01 = &uart1;
+        tovc-301 = &uart2;
     };
 
     wifi_ap: wifi_ap {
@@ -28,6 +30,18 @@
             output-high;
         };
     };
+    // Uart2的引脚随便配置，后续根据实际随意修改即可
+    uart2_default: uart2_default {
+                group1 {
+                        pinmux = <UART2_TX_GPIO15>;
+                        output-high;
+                };
+
+                group2 {
+                        pinmux = <UART2_RX_GPIO16>;
+                        bias-pull-up;
+                };
+        };
 };
 
 /* 2. 修改 I2C0 控制器 */
@@ -51,4 +65,22 @@
         com-invdir;
         prechargep = <0x22>;
     };
+};
+
+// IO17 = U1TXD
+// IO18 = U1RXD
+&uart1 {
+        status = "okay";
+        current-speed = <9600>;
+        pinctrl-0 = <&uart1_default>;
+        pinctrl-names = "default";
+};
+
+// IO15 = U2TXD
+// IO16 = U2RXD
+&uart2 {
+        status = "okay";
+        current-speed = <9600>;
+        pinctrl-0 = <&uart2_default>;
+        pinctrl-names = "default";
 };

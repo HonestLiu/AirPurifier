@@ -18,7 +18,7 @@
 		zephyr,flash = &flash0;                        /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:29 */
 		zephyr,code-partition = &slot0_partition;      /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:30 */
 		zephyr,bt-hci = &esp32_bt_hci;                 /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:31 */
-		zephyr,storage-partition = &storage_partition; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:15 */
+		zephyr,storage-partition = &storage_partition; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:17 */
 	};
 
 	/* node '/aliases' defined in zephyr/dts/common/skeleton.dtsi:15 */
@@ -29,6 +29,8 @@
 		uart-0 = &uart0;              /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:21 */
 		sw0 = &button0;               /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:22 */
 		oled-display = &ssd1306_node; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:6 */
+		dc-01 = &uart1;               /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:7 */
+		tovc-301 = &uart2;            /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:8 */
 	};
 
 	/* node '/soc' defined in zephyr/dts/xtensa/xtensa.dtsi:10 */
@@ -276,7 +278,10 @@
 			interrupts = < 0x1c 0x0 0x0 >;       /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:231 */
 			interrupt-parent = < &intc >;        /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:232 */
 			clocks = < &clock 0x2 >;             /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:233 */
-			status = "disabled";                 /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:234 */
+			status = "okay";                     /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:73 */
+			current-speed = < 0x2580 >;          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:74 */
+			pinctrl-0 = < &uart1_default >;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:75 */
+			pinctrl-names = "default";           /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:76 */
 		};
 
 		/* node '/soc/uart@6002e000' defined in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:237 */
@@ -286,7 +291,10 @@
 			interrupts = < 0x1d 0x0 0x0 >;       /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:240 */
 			interrupt-parent = < &intc >;        /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:241 */
 			clocks = < &clock 0x3 >;             /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:242 */
-			status = "disabled";                 /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:243 */
+			status = "okay";                     /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:82 */
+			current-speed = < 0x2580 >;          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:83 */
+			pinctrl-0 = < &uart2_default >;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:84 */
+			pinctrl-names = "default";           /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:85 */
 		};
 
 		/* node '/soc/gpio' defined in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:246 */
@@ -310,7 +318,7 @@
 				interrupt-parent = < &intc >;        /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:263 */
 				ngpios = < 0x20 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:269 */
 				status = "okay";                     /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:57 */
-				phandle = < 0x5 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:250 */
+				phandle = < 0x7 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:250 */
 			};
 
 			/* node '/soc/gpio/gpio@60004800' defined in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:272 */
@@ -323,7 +331,7 @@
 				interrupt-parent = < &intc >;        /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:278 */
 				ngpios = < 0x16 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:279 */
 				status = "okay";                     /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:61 */
-				phandle = < 0x6 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:250 */
+				phandle = < 0x8 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:250 */
 			};
 		};
 
@@ -354,24 +362,24 @@
 			interrupts = < 0x2a 0x0 0x0 >;      /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:296 */
 			interrupt-parent = < &intc >;       /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:297 */
 			clocks = < &clock 0x5 >;            /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:298 */
-			status = "okay";                    /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:35 */
-			clock-frequency = < 0x186a0 >;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:36 */
-			pinctrl-0 = < &i2c0_default >;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:38 */
-			pinctrl-names = "default";          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:39 */
+			status = "okay";                    /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:49 */
+			clock-frequency = < 0x186a0 >;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:50 */
+			pinctrl-0 = < &i2c0_default >;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:52 */
+			pinctrl-names = "default";          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:53 */
 
-			/* node '/soc/i2c@60013000/ssd1306@3c' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:41 */
+			/* node '/soc/i2c@60013000/ssd1306@3c' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:55 */
 			ssd1306_node: ssd1306@3c {
-				compatible = "solomon,ssd1306fb"; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:42 */
-				reg = < 0x3c >;                   /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:43 */
-				width = < 0x80 >;                 /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:44 */
-				height = < 0x40 >;                /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:45 */
-				segment-offset = < 0x0 >;         /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:46 */
-				page-offset = < 0x0 >;            /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:47 */
-				display-offset = < 0x0 >;         /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:48 */
-				multiplex-ratio = < 0x3f >;       /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:49 */
-				segment-remap;                    /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:50 */
-				com-invdir;                       /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:51 */
-				prechargep = < 0x22 >;            /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:52 */
+				compatible = "solomon,ssd1306fb"; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:56 */
+				reg = < 0x3c >;                   /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:57 */
+				width = < 0x80 >;                 /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:58 */
+				height = < 0x40 >;                /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:59 */
+				segment-offset = < 0x0 >;         /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:60 */
+				page-offset = < 0x0 >;            /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:61 */
+				display-offset = < 0x0 >;         /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:62 */
+				multiplex-ratio = < 0x3f >;       /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:63 */
+				segment-remap;                    /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:64 */
+				com-invdir;                       /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:65 */
+				prechargep = < 0x22 >;            /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:66 */
 			};
 		};
 
@@ -714,7 +722,7 @@
 			dma-channels = < 0xa >;              /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:593 */
 			dma-buf-addr-alignment = < 0x4 >;    /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:594 */
 			status = "disabled";                 /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:595 */
-			phandle = < 0x9 >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:321 */
+			phandle = < 0xb >;                   /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:321 */
 		};
 
 		/* node '/soc/sdhc@60028000' defined in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:598 */
@@ -794,7 +802,7 @@
 				power-state-name = "standby";      /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:54 */
 				min-residency-us = < 0xc8 >;       /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:55 */
 				exit-latency-us = < 0x85 >;        /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:56 */
-				phandle = < 0xf >;                 /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:36 */
+				phandle = < 0x11 >;                /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:36 */
 			};
 
 			/* node '/cpus/power-states/deep_sleep' defined in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:59 */
@@ -803,7 +811,7 @@
 				power-state-name = "soft-off";     /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:61 */
 				min-residency-us = < 0x7d0 >;      /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:62 */
 				exit-latency-us = < 0x17e >;       /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:63 */
-				phandle = < 0x10 >;                /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:36 */
+				phandle = < 0x12 >;                /* in zephyr/dts/xtensa/espressif/esp32s3/esp32s3_common.dtsi:36 */
 			};
 		};
 	};
@@ -845,6 +853,7 @@
 
 		/* node '/pin-controller/uart1_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:24 */
 		uart1_default: uart1_default {
+			phandle = < 0x5 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:75 */
 
 			/* node '/pin-controller/uart1_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:25 */
 			group1 {
@@ -861,21 +870,21 @@
 
 		/* node '/pin-controller/i2c0_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:36 */
 		i2c0_default: i2c0_default {
-			phandle = < 0x7 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:38 */
+			phandle = < 0x9 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:52 */
 
 			/* node '/pin-controller/i2c0_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:37 */
 			group1 {
 				pinmux = < 0x2d1681 >,
-				         < 0x2c9642 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:24 */
-				bias-pull-up;          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:26 */
-				drive-open-drain;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:27 */
-				output-high;           /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:28 */
+				         < 0x2c9642 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:26 */
+				bias-pull-up;          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:28 */
+				drive-open-drain;      /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:29 */
+				output-high;           /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:30 */
 			};
 		};
 
 		/* node '/pin-controller/i2c1_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:46 */
 		i2c1_default: i2c1_default {
-			phandle = < 0x8 >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:84 */
+			phandle = < 0xa >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:84 */
 
 			/* node '/pin-controller/i2c1_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:47 */
 			group1 {
@@ -889,7 +898,7 @@
 
 		/* node '/pin-controller/i2s0_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:56 */
 		i2s0_default: i2s0_default {
-			phandle = < 0xa >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:89 */
+			phandle = < 0xc >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:89 */
 
 			/* node '/pin-controller/i2s0_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:57 */
 			group1 {
@@ -903,7 +912,7 @@
 
 		/* node '/pin-controller/i2s1_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:66 */
 		i2s1_default: i2s1_default {
-			phandle = < 0xb >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:94 */
+			phandle = < 0xd >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:94 */
 
 			/* node '/pin-controller/i2s1_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:67 */
 			group1 {
@@ -917,7 +926,7 @@
 
 		/* node '/pin-controller/spim2_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:76 */
 		spim2_default: spim2_default {
-			phandle = < 0xc >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:102 */
+			phandle = < 0xe >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:102 */
 
 			/* node '/pin-controller/spim2_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:77 */
 			group1 {
@@ -935,7 +944,7 @@
 
 		/* node '/pin-controller/spim3_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:89 */
 		spim3_default: spim3_default {
-			phandle = < 0xd >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:110 */
+			phandle = < 0xf >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:110 */
 
 			/* node '/pin-controller/spim3_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:90 */
 			group1 {
@@ -953,12 +962,29 @@
 
 		/* node '/pin-controller/twai_default' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:102 */
 		twai_default: twai_default {
-			phandle = < 0xe >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:115 */
+			phandle = < 0x10 >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts:115 */
 
 			/* node '/pin-controller/twai_default/group1' defined in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:103 */
 			group1 {
 				pinmux = < 0x3a7fc5 >,
 				         < 0xff9d06 >; /* in zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi:104 */
+			};
+		};
+
+		/* node '/pin-controller/uart2_default' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:34 */
+		uart2_default: uart2_default {
+			phandle = < 0x6 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:84 */
+
+			/* node '/pin-controller/uart2_default/group1' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:35 */
+			group1 {
+				pinmux = < 0x97fcf >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:36 */
+				output-high;          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:37 */
+			};
+
+			/* node '/pin-controller/uart2_default/group2' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:40 */
+			group2 {
+				pinmux = < 0xff8490 >; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:41 */
+				bias-pull-up;          /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:42 */
 			};
 		};
 	};
@@ -985,9 +1011,9 @@
 		};
 	};
 
-	/* node '/wifi_ap' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:9 */
+	/* node '/wifi_ap' defined in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:11 */
 	wifi_ap: wifi_ap {
-		compatible = "espressif,esp32-wifi"; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:10 */
-		status = "okay";                     /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:11 */
+		compatible = "espressif,esp32-wifi"; /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:12 */
+		status = "okay";                     /* in workspace/airPurifier/airPurifier/build/zephyr/boards/esp32s3_devkitc.overlay:13 */
 	};
 };

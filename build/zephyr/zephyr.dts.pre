@@ -1066,6 +1066,8 @@ zephyr_udc0: &usb_otg {
 / {
     aliases {
         oled-display = &ssd1306_node;
+        dc-01 = &uart1;
+        tovc-301 = &uart2;
     };
 
     wifi_ap: wifi_ap {
@@ -1090,6 +1092,18 @@ zephyr_udc0: &usb_otg {
             output-high;
         };
     };
+
+    uart2_default: uart2_default {
+                group1 {
+                        pinmux = <(((15 & 0x3FU) << 0U) | ((0x1FFU & 0x1FFU) << 6U) | ((18 & 0x1FFU) << 15U))>;
+                        output-high;
+                };
+
+                group2 {
+                        pinmux = <(((16 & 0x3FU) << 0U) | ((18 & 0x1FFU) << 6U) | ((0x1FFU & 0x1FFU) << 15U))>;
+                        bias-pull-up;
+                };
+        };
 };
 
 
@@ -1113,6 +1127,24 @@ zephyr_udc0: &usb_otg {
         com-invdir;
         prechargep = <0x22>;
     };
+};
+
+
+
+&uart1 {
+        status = "okay";
+        current-speed = <9600>;
+        pinctrl-0 = <&uart1_default>;
+        pinctrl-names = "default";
+};
+
+
+
+&uart2 {
+        status = "okay";
+        current-speed = <9600>;
+        pinctrl-0 = <&uart2_default>;
+        pinctrl-names = "default";
 };
 # 0 "<command-line>" 2
 # 1 "/home/hl/zephyrproject/zephyr/misc/empty_file.c"
