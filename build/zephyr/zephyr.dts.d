@@ -27,7 +27,4 @@ empty_file.o: /home/hl/zephyrproject/zephyr/misc/empty_file.c \
  /home/hl/zephyrproject/zephyr/dts/vendor/espressif/partitions_0x0_amp_4M.dtsi \
  /home/hl/zephyrproject/zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc-pinctrl.dtsi \
  /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h \
- /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-gpio-sigmap.h \
- boards/esp32s3_devkitc.overlay \
- /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-pinctrl.h \
- /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pwm/pwm.h
+ /home/hl/zephyrproject/zephyr/include/zephyr/dt-bindings/pinctrl/esp32s3-gpio-sigmap.h

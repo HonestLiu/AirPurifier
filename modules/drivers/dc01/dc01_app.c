@@ -28,8 +28,7 @@ static struct k_thread dc01_sensor_thread;
  * @brief UART 中断回调函数
  * 逻辑：滑动窗口解析 A5 XX XX SUM 格式
  */
-static void dc01_serial_cb(const struct device *dev, void *user_data)
-{
+static void dc01_serial_cb(const struct device *dev, void *user_data) {
     static uint8_t temp_buf[D01_FRAME_SIZE];
     static int pos = 0;
     uint8_t c;
@@ -39,28 +38,22 @@ static void dc01_serial_cb(const struct device *dev, void *user_data)
     if (!uart_irq_rx_ready(dev))
         return;
 
-    while (uart_fifo_read(dev, &c, 1) == 1)
-    {
-        if (pos == 0)
-        {
-            if (c == 0xA5)
-            { // 寻找同步头
+    while (uart_fifo_read(dev, &c, 1) == 1) {
+        if (pos == 0) {
+            if (c == 0xA5) {
+                // 寻找同步头
                 temp_buf[pos++] = c;
             }
-        }
-        else
-        {
+        } else {
             temp_buf[pos++] = c;
 
-            if (pos == D01_FRAME_SIZE)
-            {
+            if (pos == D01_FRAME_SIZE) {
                 // 校验计算
                 uint8_t checksum = (temp_buf[0] + temp_buf[1] + temp_buf[2]) & 0x7F;
 
-                if (checksum == temp_buf[3])
-                {
+                if (checksum == temp_buf[3]) {
                     // 计算 Raw 值: DATAH*128 + DATAL
-                    uint16_t raw_val = ((uint16_t)(temp_buf[1] & 0x7F) << 7) | (temp_buf[2] & 0x7F);
+                    uint16_t raw_val = ((uint16_t) (temp_buf[1] & 0x7F) << 7) | (temp_buf[2] & 0x7F);
                     k_msgq_put(&sensor_msgq, &raw_val, K_NO_WAIT);
                 }
                 pos = 0; // 无论校验是否成功，都重置位置找下一个 A5
@@ -74,21 +67,18 @@ static void dc01_serial_cb(const struct device *dev, void *user_data)
  * @param timeout 超时时间
  * @return 读取到的 PM2.5 原始值
  */
-uint32_t read_dc01_raw_value(k_timeout_t timeout)
-{
+uint32_t read_dc01_raw_value(k_timeout_t timeout) {
     uint16_t pm25_value;
     k_msgq_get(&sensor_msgq, &pm25_value, timeout);
     return pm25_value;
 }
 
-void dc01_sensor_thread_entry(void *p1, void *p2, void *p3)
-{
+void dc01_sensor_thread_entry(void *p1, void *p2, void *p3) {
     uint16_t pm25_raw;
     printk("--- DC01 PM2.5 Monitor (Fixed-Point Display) ---\n");
-    while (1)
-    {
+    while (1) {
         pm25_raw = read_dc01_raw_value(K_FOREVER);
-        uint32_t total_x10 = (uint32_t)pm25_raw * 4;
+        uint32_t total_x10 = (uint32_t) pm25_raw * 4;
 
 #if SENSOR_CENTER_ENABLED   // 使用传感器中心模块
         // 说明书公式：PM2.5 = (Raw * 4) / 10
@@ -116,11 +106,8 @@ void dc01_sensor_thread_entry(void *p1, void *p2, void *p3)
     }
 }
 
-int dc01_sensor_app_start(void)
-{
-
-    if (!device_is_ready(dc01_dev))
-    {
+int dc01_sensor_app_start(void) {
+    if (!device_is_ready(dc01_dev)) {
         printk("Error: DC01 UART device not ready\n");
         return -1;
     }
@@ -134,8 +121,7 @@ int dc01_sensor_app_start(void)
         .flow_ctrl = UART_CFG_FLOW_CTRL_NONE,
     };
     int ret = uart_configure(dc01_dev, &uart_cfg);
-    if (ret != 0)
-    {
+    if (ret != 0) {
         printk("Error: DC01 UART configuration failed: %d\n", ret);
         return -1;
     }

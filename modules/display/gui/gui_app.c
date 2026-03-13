@@ -2,8 +2,7 @@
 #include <zephyr/kernel.h>
 #include <stdlib.h>
 
-int u8g2_init(u8g2_t *u8g2)
-{
+int u8g2_init(u8g2_t *u8g2) {
     /* 初始化 u8g2：
        - 使用 SSD1306 128x64 非标驱动 (noname)
        - 全缓冲模式 (f)
@@ -20,8 +19,7 @@ int u8g2_init(u8g2_t *u8g2)
 }
 
 /* GUI 渲染线程 */
-void gui_thread_func(void *a, void *b, void *c)
-{
+void gui_thread_func(void *a, void *b, void *c) {
     printk("GUI thread started\n");
     u8g2_t u8g2;
 
@@ -32,13 +30,13 @@ void gui_thread_func(void *a, void *b, void *c)
 
     // 初始化配置：默认全部开启显示
     ui_config_t display_cfg = {
-        .show_wifi = false,    // 默认不显示，直到连接
-        .show_fan = true,      // 显示风扇图标
-        .auto_mode = true,     // 显示自动模式图标
+        .show_wifi = false, // 默认不显示，直到连接
+        .show_fan = true, // 显示风扇图标
+        .auto_mode = true, // 显示自动模式图标
         .show_warning = false, // 默认不显示警告
         .show_humidity = true, // 显示湿度逻辑
-        .show_temp = true,     // 显示温度逻辑
-        .show_hcho = true,     // 显示甲醛逻辑
+        .show_temp = true, // 显示温度逻辑
+        .show_hcho = true, // 显示甲醛逻辑
         .pm25_raw = 0,
         .humidity = 0,
         .temp = 0,
@@ -48,11 +46,9 @@ void gui_thread_func(void *a, void *b, void *c)
     // 先渲染一帧初始界面
     gui_render_screen(&u8g2, &display_cfg);
 
-    while (1)
-    {
+    while (1) {
         // 阻塞等待消息
-        if (k_msgq_get(&gui_msgq, &msg, K_FOREVER) == 0)
-        {
+        if (k_msgq_get(&gui_msgq, &msg, K_FOREVER) == 0) {
             // 根据消息类型更新本地状态
             switch (msg.type) {
                 case GUI_EVT_PM25:
@@ -68,7 +64,7 @@ void gui_thread_func(void *a, void *b, void *c)
                 case GUI_EVT_ENV:
                     display_cfg.tvoc = msg.data.env.tvoc;
                     display_cfg.hcho = msg.data.env.hcho;
-                    display_cfg.co2  = msg.data.env.eco2;
+                    display_cfg.co2 = msg.data.env.eco2;
                     break;
                 case GUI_EVT_WIFI:
                     display_cfg.show_wifi = msg.data.b_val;

@@ -48,7 +48,7 @@ uint8_t u8x8_byte_zephyr_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *a
             }
             break;
         case U8X8_MSG_BYTE_SET_DC:
-             /* For I2C, DC is usually handled by the command/data byte prefix, u8g2 handles this logic internally for I2C usually */
+            /* For I2C, DC is usually handled by the command/data byte prefix, u8g2 handles this logic internally for I2C usually */
             break;
         default: return 0;
     }
@@ -66,7 +66,7 @@ uint8_t u8x8_byte_zephyr_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *a
 uint8_t u8x8_gpio_and_delay_zephyr(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr) {
     switch (msg) {
         case U8X8_MSG_GPIO_AND_DELAY_INIT:
-             /* No specific GPIO init needed for I2C usually (handled by bus driver) */
+            /* No specific GPIO init needed for I2C usually (handled by bus driver) */
             break;
         case U8X8_MSG_DELAY_MILLI: // 毫秒延时
             k_msleep(arg_int);

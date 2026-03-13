@@ -18,7 +18,6 @@ K_THREAD_STACK_DEFINE(button_stack, BUTTON_STACK_SIZE);
 struct k_thread button_thread;
 
 void button_thread_func(void *a, void *b, void *c) {
-     int ret;
     uint8_t state_1;
     uint8_t last_state = 0xFF; // 初始化为无效状态，确保第一次读取时触发事件
 
@@ -27,12 +26,12 @@ void button_thread_func(void *a, void *b, void *c) {
         return;
     }
 
-    const struct button_api *btn_api = (const struct button_api *)btn_1->api;
+    const struct button_api *btn_api = (const struct button_api *) btn_1->api;
 
     printk("[Button App] Button thread started\n");
 
     while (1) {
-        ret = btn_api->get(btn_1, &state_1);
+        int ret = btn_api->get(btn_1, &state_1);
         if (ret < 0) {
             printk("Error (%d): failed to read button 1 pin\r\n", ret);
             continue;
@@ -54,13 +53,13 @@ void button_thread_func(void *a, void *b, void *c) {
 }
 
 int button_app_start(void) {
-    k_tid_t tid = k_thread_create(&button_thread,
-                                  button_stack,
-                                  K_THREAD_STACK_SIZEOF(button_stack),
-                                  button_thread_func,
-                                  NULL, NULL, NULL,
-                                  5,          // 优先级
-                                  0,          // 无特殊选项
-                                  K_NO_WAIT); // 立即启动
+    k_thread_create(&button_thread,
+                    button_stack,
+                    K_THREAD_STACK_SIZEOF(button_stack),
+                    button_thread_func,
+                    NULL, NULL, NULL,
+                    5, // 优先级
+                    0, // 无特殊选项
+                    K_NO_WAIT); // 立即启动
     return 0;
 }

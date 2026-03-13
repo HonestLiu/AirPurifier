@@ -1,27 +1,5 @@
 [
   [
-    "CONFIG_DT_HAS_AOSONG_AHT10_ENABLED",
-    "n",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      868
-    ]
-  ],
-  [
-    "CONFIG_DT_HAS_CUSTOM_BUTTON_ENABLED",
-    "n",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2208
-    ]
-  ],
-  [
     "CONFIG_DT_HAS_ESPRESSIF_ESP32_AES_ENABLED",
     "n",
     "bool",
@@ -77,17 +55,6 @@
     ]
   ],
   [
-    "CONFIG_DT_HAS_ESPRESSIF_ESP32_I2C_ENABLED",
-    "n",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2503
-    ]
-  ],
-  [
     "CONFIG_DT_HAS_ESPRESSIF_ESP32_INTC_ENABLED",
     "n",
     "bool",
@@ -107,17 +74,6 @@
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
       2528
-    ]
-  ],
-  [
-    "CONFIG_DT_HAS_ESPRESSIF_ESP32_LEDC_ENABLED",
-    "n",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      2543
     ]
   ],
   [
@@ -275,17 +231,6 @@
     ]
   ],
   [
-    "CONFIG_DT_HAS_PWM_LEDS_ENABLED",
-    "n",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      8863
-    ]
-  ],
-  [
     "CONFIG_DT_HAS_SNPS_DWC2_ENABLED",
     "n",
     "bool",
@@ -305,17 +250,6 @@
     [
       "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
       11478
-    ]
-  ],
-  [
-    "CONFIG_DT_HAS_SOLOMON_SSD1306FB_ENABLED",
-    "n",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/workspace/airPurifier/airPurifier/build/Kconfig/Kconfig.dts",
-      11483
     ]
   ],
   [
@@ -6255,7 +6189,6 @@
     "y",
     "select",
     [
-      "I2C_ESP32 && DT_HAS_ESPRESSIF_ESP32_I2C_ENABLED && I2C",
       "UART_ESP32 && DT_HAS_ESPRESSIF_ESP32_UART_ENABLED && SERIAL"
     ]
   ],
@@ -6389,6 +6322,14 @@
     null
   ],
   [
+    "CONFIG_I2C_ALLOW_NO_STOP_TRANSACTIONS",
+    "y",
+    "bool",
+    null,
+    "unset",
+    null
+  ],
+  [
     "CONFIG_I2C_RTIO",
     "y",
     "bool",
@@ -6411,17 +6352,6 @@
     null,
     "unset",
     null
-  ],
-  [
-    "CONFIG_I2C_ESP32",
-    "y",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/zephyr/drivers/i2c/Kconfig.esp32",
-      9
-    ]
   ],
   [
     "CONFIG_I2C_INIT_PRIORITY",
@@ -6978,17 +6908,6 @@
     null,
     "unset",
     null
-  ],
-  [
-    "CONFIG_PWM_LED_ESP32",
-    "y",
-    "bool",
-    "y",
-    "default",
-    [
-      "/home/hl/zephyrproject/zephyr/drivers/pwm/Kconfig.esp32",
-      9
-    ]
   ],
   [
     "CONFIG_PWM_TC_INIT_PRIORITY",

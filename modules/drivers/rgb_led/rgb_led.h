@@ -8,6 +8,7 @@
 
 // 启动 RGB LED 控制应用
 int rgb_led_init(void);
+
 // 设置 RGB LED 颜色，参数为 0-255 范围的 R,G,B 值
 int rgb_led_set_color(uint8_t r, uint8_t g, uint8_t b);
 

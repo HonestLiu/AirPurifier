@@ -15,7 +15,6 @@ cmake:
      - '/home/hl/zephyrproject/zephyr/dts/bindings'
     files:
      - '/home/hl/zephyrproject/zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu.dts'
-     - 'boards/esp32s3_devkitc.overlay'
     include-dirs:
      - '/home/hl/zephyrproject/modules/hal/ambiq/dts'
      - '/home/hl/zephyrproject/modules/hal/atmel/include'
@@ -44,8 +43,6 @@ cmake:
      - '/home/hl/zephyrproject/zephyr/dts/arm'
      - '/home/hl/zephyrproject/zephyr/dts/arc'
      - '/home/hl/zephyrproject/zephyr/dts'
-    user-files:
-     - 'boards/esp32s3_devkitc.overlay'
   kconfig:
     files:
      - '/home/hl/zephyrproject/zephyr/boards/espressif/esp32s3_devkitc/esp32s3_devkitc_procpu_defconfig'
@@ -60,6 +57,6 @@ cmake:
     zephyr-base: '/home/hl/zephyrproject/zephyr'
 version: '0.1.0'
 west:
-  command: '/home/hl/zephyrproject/.venv/bin/west build -p always -b esp32s3_devkitc/esp32s3/procpu -- -DDTC_OVERLAY_FILE=boards/esp32s3_devkitc.overlay'
+  command: '/home/hl/zephyrproject/.venv/bin/west build --cmake-only --board=esp32s3_devkitc/esp32s3/procpu --build-dir /home/hl/zephyrproject/workspace/airPurifier/airPurifier/build /home/hl/zephyrproject/workspace/airPurifier/airPurifier -- -DCMAKE_MAKE_PROGRAM=/home/hl/Develop/Tool/clion-2025.3.1.1/bin/ninja/linux/x64/ninja'
   topdir: '/home/hl/zephyrproject'
   version: '1.5.0'

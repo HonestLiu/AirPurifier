@@ -3,10 +3,10 @@
 #include <stdio.h>
 
 /* 定义 GUI 消息队列 */
-K_MSGQ_DEFINE(gui_msgq, 
-              sizeof(gui_msg_t), 
-              20,   // 队列深度
-              4);   // 对齐字节数
+K_MSGQ_DEFINE(gui_msgq,
+              sizeof(gui_msg_t),
+              20, // 队列深度
+              4); // 对齐字节数
 
 // --- 辅助函数实现 ---
 void gui_set_pm25(uint16_t val) {
@@ -16,7 +16,7 @@ void gui_set_pm25(uint16_t val) {
 
 void gui_set_temp_hum(int16_t temp, uint16_t hum) {
     gui_msg_t msg = {
-        .type = GUI_EVT_TEMP_HUM, 
+        .type = GUI_EVT_TEMP_HUM,
         .data.th = {.temp = temp, .hum = hum}
     };
     k_msgq_put(&gui_msgq, &msg, K_NO_WAIT);
@@ -24,7 +24,7 @@ void gui_set_temp_hum(int16_t temp, uint16_t hum) {
 
 void gui_set_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2) {
     gui_msg_t msg = {
-        .type = GUI_EVT_ENV, 
+        .type = GUI_EVT_ENV,
         .data.env = {.tvoc = tvoc, .hcho = hcho, .eco2 = eco2}
     };
     k_msgq_put(&gui_msgq, &msg, K_NO_WAIT);
@@ -57,7 +57,7 @@ void gui_set_auto_mode(bool active) {
  * @param  cfg: 指向 UI 配置结构体的指针
  * @retval None
  */
-void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg)  {
+void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg) {
     char buf[16];
     u8g2_ClearBuffer(u8g2);
     u8g2_SetBitmapMode(u8g2, 1);
@@ -72,7 +72,7 @@ void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg)  {
     if (cfg->show_humidity) {
         u8g2_DrawXBM(u8g2, -2, 44, 16, 16, temp_bits);
         u8g2_SetFont(u8g2, u8g2_font_6x12_tr);
-        snprintf(buf, sizeof(buf), "%d%%", cfg->humidity); 
+        snprintf(buf, sizeof(buf), "%d%%", cfg->humidity);
         u8g2_DrawStr(u8g2, 16, 57, buf);
     }
 
@@ -120,10 +120,10 @@ void gui_render_screen(u8g2_t *u8g2, const ui_config_t *cfg)  {
     // dc01_app 里： pm25_raw_x10 = total_x10;
     // gui_render_screen 里之前是： uint32_t x10 = cfg->pm25_raw * 4; 
     // 假设 gui_set_pm25 传入的是实际 PM2.5 * 10 
-    
+
     // 如果 cfg->pm25_raw 是放大10倍的值
     snprintf(buf, sizeof(buf), "%u.%u", cfg->pm25_raw / 10, cfg->pm25_raw % 10);
-    
+
     // 如果数字很大，稍微左移位置以防重叠
     int x_pos = (cfg->pm25_raw >= 1000) ? 32 : 37;
     u8g2_DrawStr(u8g2, x_pos, 40, buf);

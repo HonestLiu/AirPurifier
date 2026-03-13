@@ -20,8 +20,7 @@ static struct k_thread tovc_sensor_thread;
 /**
  * @brief UART 中断回调：解析格式 2C E4 Y1 Y2 Y3 Y4 Y5 Y6 SUM [cite: 157]
  */
-void tvoc_serial_cb(const struct device *dev, void *user_data)
-{
+void tvoc_serial_cb(const struct device *dev, void *user_data) {
     static uint8_t buf[TVOC_FRAME_SIZE];
     static int pos = 0;
     uint8_t c;
@@ -33,7 +32,7 @@ void tvoc_serial_cb(const struct device *dev, void *user_data)
             if (c == 0x2C) buf[pos++] = c; // 帧头 [cite: 161]
         } else if (pos == 1) {
             if (c == 0xE4) buf[pos++] = c; // 保留位 [cite: 162]
-            else pos = 0; 
+            else pos = 0;
         } else {
             buf[pos++] = c;
             if (pos == TVOC_FRAME_SIZE) {
@@ -44,9 +43,9 @@ void tvoc_serial_cb(const struct device *dev, void *user_data)
                 if (sum == buf[8]) {
                     tvoc_data_t data;
                     // 计算公式：High*256 + Low 
-                    data.tvoc = ((uint16_t)buf[2] << 8) | buf[3];
-                    data.hcho = ((uint16_t)buf[4] << 8) | buf[5];
-                    data.eco2 = ((uint16_t)buf[6] << 8) | buf[7];
+                    data.tvoc = ((uint16_t) buf[2] << 8) | buf[3];
+                    data.hcho = ((uint16_t) buf[4] << 8) | buf[5];
+                    data.eco2 = ((uint16_t) buf[6] << 8) | buf[7];
                     k_msgq_put(&tvoc_msgq, &data, K_NO_WAIT);
                 }
                 pos = 0;
@@ -55,14 +54,12 @@ void tvoc_serial_cb(const struct device *dev, void *user_data)
     }
 }
 
-void tovc_sensor_thread_entry(void *p1, void *p2, void *p3)
-{
+void tovc_sensor_thread_entry(void *p1, void *p2, void *p3) {
     tvoc_data_t sensor_data;
 
     while (1) {
         if (k_msgq_get(&tvoc_msgq, &sensor_data, K_FOREVER) == 0) {
-
-            #if SENSOR_CENTER_ENABLE
+#if SENSOR_CENTER_ENABLE
             // 发送到传感器中心
             struct sensor_event ev = {
                 .type = SENSOR_TOVC_301,
@@ -74,20 +71,19 @@ void tovc_sensor_thread_entry(void *p1, void *p2, void *p3)
                         .eco2 = sensor_data.eco2,
                     }
                 }
-            }; 
+            };
             sensor_hub_send(&ev, K_NO_WAIT);
-            #else
+#else
             // 如果要在 OLED 上显示 mg/m3，除以 1000 即可
             // 这里演示直接打印整数 (ug/m3)
-            printk("[TVOC] %u ug/m3 | [HCHO] %u ug/m3 | [eCO2] %u ppm\n", 
-                    sensor_data.tvoc, sensor_data.hcho, sensor_data.eco2);
-            #endif
+            printk("[TVOC] %u ug/m3 | [HCHO] %u ug/m3 | [eCO2] %u ppm\n",
+                   sensor_data.tvoc, sensor_data.hcho, sensor_data.eco2);
+#endif
         }
     }
 }
 
-int tovc_sensor_app_start(void)
-{
+int tovc_sensor_app_start(void) {
     if (!device_is_ready(tovc_dev)) {
         printk("Error: TOVC-301 UART device not ready\n");
         return -1;

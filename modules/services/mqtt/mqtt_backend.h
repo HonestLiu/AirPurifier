@@ -20,7 +20,7 @@ struct mqtt_backend_config {
     const char *broker_ip;
     uint16_t broker_port;
     const char *client_id;
-    
+
     // 认证信息 (可选，设为 NULL 则不使用)
     const char *user;
     const char *pass;

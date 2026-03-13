@@ -3,7 +3,6 @@
 #include <zephyr/console/console.h>
 #include <zephyr/sys/printk.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include "fan.h"
 
 
@@ -84,7 +83,7 @@ void fan_control_thread_entry(void *p1, void *p2, void *p3)
 int fan_app_start(void) {
     if (!pwm_is_ready_dt(&pwm_dev)) {
 		printk("Error: PWM device %s is not ready\n", pwm_dev.dev->name);
-		return 0;
+		return -1;
 	}
 
     /* 上电默认设置为最小占空比 20% */

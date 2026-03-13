@@ -7,7 +7,6 @@
  * @note 主体控制逻辑位于services模块中的control_center，此处负责初始化各子模块
  */
 #include <zephyr/kernel.h>
-#include <zephyr/device.h>
 #include <u8g2.h>
 #include "u8g2_zephyr_port.h"
 
@@ -34,36 +33,32 @@ K_THREAD_STACK_DEFINE(sensor_hub_stack, SENSOR_HUB_STACK_SIZE);
 struct k_thread sensor_hub_thread_data;
 
 
-
-int main(void)
-{
+int main(void) {
     printk("Air Purifier Application Start\n");
 
     /* 1. 先创建并启动 GUI 线程，确保上电屏幕立刻显示 */
     k_thread_create(&gui_thread_data, gui_stack,
-                                      K_THREAD_STACK_SIZEOF(gui_stack),
-                                      gui_thread_func,
-                                      NULL, NULL, NULL,
-                                      5, 0, K_NO_WAIT);
+                    K_THREAD_STACK_SIZEOF(gui_stack),
+                    gui_thread_func,
+                    NULL, NULL, NULL,
+                    5, 0, K_NO_WAIT);
 
     /* 启动传感器中心处理线程 */
     k_thread_create(&sensor_hub_thread_data, sensor_hub_stack,
-                                             K_THREAD_STACK_SIZEOF(sensor_hub_stack),
-                                             sensor_hub_thread,
-                                             NULL, NULL, NULL,
-                                             6, 0, K_NO_WAIT);
+                    K_THREAD_STACK_SIZEOF(sensor_hub_stack),
+                    sensor_hub_thread,
+                    NULL, NULL, NULL,
+                    6, 0, K_NO_WAIT);
 
     /* 2. 这里的休眠只影响配网启动，不会阻塞 GUI 显示了 */
     printk("Starting WiFi Provisioning Service...\n");
-    wifi_prov_app_start();
 
     /* 3. 等待配网 */
+    wifi_prov_app_start();
     int64_t start_time = k_uptime_get(); // 记录开始时间
     // 每5秒检查一次，直到连接成功或超时
-    while (k_sem_take(&wifi_connected_sem, K_SECONDS(5)) != 0)
-    {
-        if (k_uptime_get() - start_time > K_HOURS(1).ticks * CONFIG_SYS_CLOCK_TICKS_PER_SEC / 1000)
-        {
+    while (k_sem_take(&wifi_connected_sem, K_SECONDS(5)) != 0) {
+        if (k_uptime_get() - start_time > K_HOURS(1).ticks * CONFIG_SYS_CLOCK_TICKS_PER_SEC / 1000) {
             printk("WiFi Provisioning Timeout. Restarting...\n");
             break; // 超时，跳出等待
         }
@@ -92,8 +87,7 @@ int main(void)
     // 10. 启动按钮服务
     button_app_start();
 
-    while (1)
-    {
+    while (1) {
         k_msleep(1000);
     }
 

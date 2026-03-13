@@ -16,14 +16,14 @@ static bool indicator_ready = false;
 static status_indicator_state_t current_state = STATUS_INDICATOR_STATE_BOOT;
 
 static const rgb_color_t state_palette[STATUS_INDICATOR_STATE_COUNT] = {
-    [STATUS_INDICATOR_STATE_BOOT] = { .r = 0,   .g = 0,   .b = 40 },   // 上电：暗蓝
-    [STATUS_INDICATOR_STATE_WIFI_CONNECTING] = { .r = 0,   .g = 40,  .b = 255 }, // WiFi 配网：蓝色
-    [STATUS_INDICATOR_STATE_NORMAL_ACTIVE] = { .r = 0,   .g = 200, .b = 255 }, // 自动运行：青色
-    [STATUS_INDICATOR_STATE_NORMAL_IDLE] = { .r = 0,   .g = 80,  .b = 0 },   // 待机：绿色
-    [STATUS_INDICATOR_STATE_MANUAL_MODE] = { .r = 255, .g = 255, .b = 200 }, // 手动：暖白
-    [STATUS_INDICATOR_STATE_NIGHT_MODE] = { .r = 120, .g = 0,   .b = 180 }, // 夜间：紫色
-    [STATUS_INDICATOR_STATE_ALERT_POLLUTION] = { .r = 255, .g = 0,   .b = 0 },   // 污染告警：红色
-    [STATUS_INDICATOR_STATE_ALERT_FILTER] = { .r = 255, .g = 140, .b = 0 },   // 滤芯告警：琥珀
+    [STATUS_INDICATOR_STATE_BOOT] = {.r = 0, .g = 0, .b = 40}, // 上电：暗蓝
+    [STATUS_INDICATOR_STATE_WIFI_CONNECTING] = {.r = 0, .g = 40, .b = 255}, // WiFi 配网：蓝色
+    [STATUS_INDICATOR_STATE_NORMAL_ACTIVE] = {.r = 0, .g = 200, .b = 255}, // 自动运行：青色
+    [STATUS_INDICATOR_STATE_NORMAL_IDLE] = {.r = 0, .g = 80, .b = 0}, // 待机：绿色
+    [STATUS_INDICATOR_STATE_MANUAL_MODE] = {.r = 255, .g = 255, .b = 200}, // 手动：暖白
+    [STATUS_INDICATOR_STATE_NIGHT_MODE] = {.r = 120, .g = 0, .b = 180}, // 夜间：紫色
+    [STATUS_INDICATOR_STATE_ALERT_POLLUTION] = {.r = 255, .g = 0, .b = 0}, // 污染告警：红色
+    [STATUS_INDICATOR_STATE_ALERT_FILTER] = {.r = 255, .g = 140, .b = 0}, // 滤芯告警：琥珀
 };
 
 BUILD_ASSERT(ARRAY_SIZE(state_palette) == STATUS_INDICATOR_STATE_COUNT, "palette mismatch");

@@ -7,24 +7,28 @@
 
 // --- 消息定义 ---
 typedef enum {
-    CTRL_EVT_PM25,      // PM2.5 数据
-    CTRL_EVT_ENV,       // TVOC, HCHO, eCO2 数据
-    CTRL_EVT_TH,        // 温湿度数据
-    CTRL_EVT_WIFI,      // WiFi 状态
-    CTRL_EVT_CMD_MODE,  // 设置模式命令
-    CTRL_EVT_CMD_FAN,   // 设置风速命令
+    CTRL_EVT_PM25, // PM2.5 数据
+    CTRL_EVT_ENV, // TVOC, HCHO, eCO2 数据
+    CTRL_EVT_TH, // 温湿度数据
+    CTRL_EVT_WIFI, // WiFi 状态
+    CTRL_EVT_CMD_MODE, // 设置模式命令
+    CTRL_EVT_CMD_FAN, // 设置风速命令
     CTRL_EVT_FAN_POWER_TOGGLE // 风扇电源开关
 } ctrl_evt_type_t;
 
 typedef struct {
-    ctrl_evt_type_t type;                               // 事件类型
-    union { 
-        uint32_t pm25;                                  // PM2.5 数据
-        struct { uint16_t tvoc, hcho, eco2; } env;      // 环境数据
-        struct { float temp, hum; } th;                 // 温湿度数据
-        int  fan_speed_enum;                            // 风速枚举
-        char mode_str[16];                              // 模式字符串
-        bool wifi_connected;                            // WiFi 连接状态
+    ctrl_evt_type_t type; // 事件类型
+    union {
+        uint32_t pm25; // PM2.5 数据
+        struct {
+            uint16_t tvoc, hcho, eco2;
+        } env; // 环境数据
+        struct {
+            float temp, hum;
+        } th; // 温湿度数据
+        int fan_speed_enum; // 风速枚举
+        char mode_str[16]; // 模式字符串
+        bool wifi_connected; // WiFi 连接状态
     } data;
 } ctrl_msg_t;
 
@@ -32,14 +36,14 @@ K_MSGQ_DEFINE(control_msgq, sizeof(ctrl_msg_t), 20, 4);
 
 // 全局状态
 static air_purifier_status_t g_status = {
-    .mode = MODE_AUTO,                                              // 默认自动模式
-    .wifi_connected = false,                                       // 默认未连接
-    .fan_speed_enum = 0,                                            // 默认风速OFF
+    .mode = MODE_AUTO, // 默认自动模式
+    .wifi_connected = false, // 默认未连接
+    .fan_speed_enum = 0, // 默认风速OFF
     .fan_power_enabled = true,
-    .filter_life_hours = 0,                                         // 过滤器寿命
-    .alert_high_pollution = false,                                  // 默认无警告
-    .alert_replace_filter = false,                                  // 默认无警告
-    .pm25_val = 0, .tvoc_val = 0, .hcho_val = 0, .eco2_val = 400,   // 默认环境值
+    .filter_life_hours = 0, // 过滤器寿命
+    .alert_high_pollution = false, // 默认无警告
+    .alert_replace_filter = false, // 默认无警告
+    .pm25_val = 0, .tvoc_val = 0, .hcho_val = 0, .eco2_val = 400, // 默认环境值
     .temp_val = 25.0f, .hum_val = 50.0f
 };
 
@@ -50,7 +54,7 @@ static fan_speed_t sanitize_speed(int speed_level) {
     if (speed_level > FAN_SPEED_HIGH) {
         return FAN_SPEED_HIGH;
     }
-    return (fan_speed_t)speed_level;
+    return (fan_speed_t) speed_level;
 }
 
 static fan_speed_t get_effective_speed(void) {
@@ -125,16 +129,16 @@ static void update_system_logic(void) {
  */
 static void control_thread_func(void *p1, void *p2, void *p3) {
     ctrl_msg_t msg;
-    
+
     // Init Defaults
     gui_set_auto_mode(true);
-    
-    while(1) {
+
+    while (1) {
         if (k_msgq_get(&control_msgq, &msg, K_FOREVER) == 0) {
-            switch(msg.type) {
+            switch (msg.type) {
                 case CTRL_EVT_PM25:
                     g_status.pm25_val = msg.data.pm25;
-                    gui_set_pm25((uint16_t)(g_status.pm25_val * 10));  // 更新GUI，乘10显示
+                    gui_set_pm25((uint16_t) (g_status.pm25_val * 10)); // 更新GUI，乘10显示
                     break;
                 case CTRL_EVT_ENV:
                     g_status.tvoc_val = msg.data.env.tvoc;
@@ -145,7 +149,7 @@ static void control_thread_func(void *p1, void *p2, void *p3) {
                 case CTRL_EVT_TH:
                     g_status.temp_val = msg.data.th.temp;
                     g_status.hum_val = msg.data.th.hum;
-                    gui_set_temp_hum((int16_t)g_status.temp_val, (uint16_t)g_status.hum_val);
+                    gui_set_temp_hum((int16_t) g_status.temp_val, (uint16_t) g_status.hum_val);
                     break;
                 case CTRL_EVT_WIFI:
                     gui_set_wifi(msg.data.wifi_connected);
@@ -195,7 +199,7 @@ void control_center_init(void) {
  * @param val PM2.5 数值，单位 ug/m3
  */
 void control_report_pm25(uint32_t val) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_PM25, .data.pm25 = val };
+    ctrl_msg_t msg = {.type = CTRL_EVT_PM25, .data.pm25 = val};
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 
@@ -206,17 +210,17 @@ void control_report_pm25(uint32_t val) {
  * @param eco2 eCO2 数值，单位 ppm
  */
 void control_report_env(uint16_t tvoc, uint16_t hcho, uint16_t eco2) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_ENV, .data.env = {tvoc, hcho, eco2} };
+    ctrl_msg_t msg = {.type = CTRL_EVT_ENV, .data.env = {tvoc, hcho, eco2}};
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 
 /**
  * @brief 上报温湿度数据
  * @param temp 温度，单位 摄氏度
- * @param hum 湿度，单位 百分比
+ * @param hum 湿度，单位 百分比conda create -n tts python=3.10 -y
  */
 void control_report_temp_hum(float temp, float hum) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_TH, .data.th = {temp, hum} };
+    ctrl_msg_t msg = {.type = CTRL_EVT_TH, .data.th = {temp, hum}};
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 
@@ -225,7 +229,7 @@ void control_report_temp_hum(float temp, float hum) {
  * @param connected 是否已连接
  */
 void control_report_wifi_status(bool connected) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_WIFI, .data.wifi_connected = connected ? 1 : 0 };
+    ctrl_msg_t msg = {.type = CTRL_EVT_WIFI, .data.wifi_connected = connected ? 1 : 0};
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 
@@ -233,9 +237,9 @@ void control_report_wifi_status(bool connected) {
  * @brief 设置系统模式
  * @param mode_str 模式字符串，"auto", "manual", "night"
  */
-void control_set_mode(const char* mode_str) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_CMD_MODE };
-    strncpy(msg.data.mode_str, mode_str, sizeof(msg.data.mode_str)-1);
+void control_set_mode(const char *mode_str) {
+    ctrl_msg_t msg = {.type = CTRL_EVT_CMD_MODE};
+    strncpy(msg.data.mode_str, mode_str, sizeof(msg.data.mode_str) - 1);
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 
@@ -243,8 +247,8 @@ void control_set_mode(const char* mode_str) {
  * @brief 设置风扇速度命令
  * @param speed_str 速度字符串，"off", "low", "medium", "high"
  */
-void control_set_fan_cmd(const char* speed_str) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_CMD_FAN };
+void control_set_fan_cmd(const char *speed_str) {
+    ctrl_msg_t msg = {.type = CTRL_EVT_CMD_FAN};
     int lvl = 0;
     if (strcmp(speed_str, "off") == 0) lvl = 0;
     else if (strcmp(speed_str, "low") == 0) lvl = 1;
@@ -255,7 +259,7 @@ void control_set_fan_cmd(const char* speed_str) {
 }
 
 void control_toggle_fan_power(void) {
-    ctrl_msg_t msg = { .type = CTRL_EVT_FAN_POWER_TOGGLE };
+    ctrl_msg_t msg = {.type = CTRL_EVT_FAN_POWER_TOGGLE};
     k_msgq_put(&control_msgq, &msg, K_NO_WAIT);
 }
 

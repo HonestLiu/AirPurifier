@@ -31,7 +31,9 @@ typedef enum {
 } status_indicator_state_t;
 
 void status_indicator_init(void);
+
 void status_indicator_force_state(status_indicator_state_t state);
+
 void status_indicator_sync(const status_indicator_inputs_t *inputs);
 
 #endif /* STATUS_INDICATOR_H_ */
